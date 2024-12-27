@@ -1,5 +1,10 @@
 #pragma once
-class list
-{
-};
 
+#include <iostream>
+
+namespace ms {
+	template <typename T>
+	class list {
+
+	};
+}
