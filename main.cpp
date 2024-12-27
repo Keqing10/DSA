@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "vector.h"
+#include "Test.h"
 
 int main() {
-	ms::vector v(10, 2);
-	for (int i = 0; i < 10; ++i) {
-		std::cout << i << " : " << v[i] << std::endl;
-	}
+	ms::TestVec test1;
+	test1.run();
+
+	return 0;
 }
