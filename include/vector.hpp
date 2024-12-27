@@ -102,6 +102,13 @@ namespace ms {
 		}
 
 		/**
+		 * @brief 删除数组尾元素并返回
+		 */
+		T pop_back(){
+			return _ptr[--_size];
+		}
+
+		/**
 		 * @brief 在下标index处添加元素val
 		 * @param index 元素val的最终下标
 		 * @param val 待插入的元素
