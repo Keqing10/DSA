@@ -3,10 +3,10 @@
 
 ## 数据结构
 
-* [ ] `vector`
-* [ ] `list`
-* [ ] `stack`
-* [ ] `queue`
+* [x] `vector`
+* [x] `list`
+* [x] `stack`
+* [x] `queue`
 * [ ] `string`
 * [ ] `BiTree`
 * [ ] `BST`

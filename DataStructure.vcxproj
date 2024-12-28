@@ -141,7 +141,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BiTree.hpp" />
     <ClInclude Include="include\list.hpp" />
+    <ClInclude Include="include\queue.hpp" />
     <ClInclude Include="include\stack.hpp" />
     <ClInclude Include="include\vector.hpp" />
     <ClInclude Include="Test.h" />

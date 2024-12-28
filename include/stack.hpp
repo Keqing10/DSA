@@ -21,9 +21,10 @@ namespace ms {
 			_ptr = new T[_maxSize];
 		}
 		/**
-		 * @param n 初始栈的最大容量
+		 * @param n 初始栈的最大容量。最小为10，n > 10时n有效
 		 */
-		stack(int n) : _maxSize(n), _size(0) {
+		stack(int n) : _size(0) {
+			_maxSize = n > 10 ? n : 10;
 			_ptr = new T[_maxSize];
 		}
 		~stack() { delete[] _ptr; }
@@ -47,7 +48,7 @@ namespace ms {
 
 		T& pop() {
 			if (_size == 0) {
-				std::cerr << "Pop() while stack is empty." << std::endl;
+				std::cerr << "pop() while stack is empty." << std::endl;
 				exit(1);
 			}
 			return _ptr[--_size];
@@ -55,7 +56,7 @@ namespace ms {
 
 		T& top() {
 			if (_size == 0) {
-				std::cerr << "Top() while stack is empty." << std::endl;
+				std::cerr << "top() while stack is empty." << std::endl;
 				exit(1);
 			}
 			return _ptr[_size - 1];

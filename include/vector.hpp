@@ -140,5 +140,7 @@ namespace ms {
 		int size() { return _size; }
 
 		int maxSize() { return _maxSize; }
+
+		T* get_array() { return _ptr; }
 	};
 }

@@ -38,6 +38,12 @@
     <ClInclude Include="Test.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\queue.hpp">
+      <Filter>头文件\data structure</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BiTree.hpp">
+      <Filter>头文件\data structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
