@@ -41,7 +41,7 @@ namespace ms {
 			return _size == 0;
 		}
 
-		void push(T& elem) {
+		void push(T&& elem) {
 			if (_size == _maxSize) _extend();
 			_ptr[_size++] = elem;
 		}

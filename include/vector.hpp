@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "list.hpp"
+
 namespace ms {
 	template <typename T>
 	class vector {
@@ -33,7 +35,7 @@ namespace ms {
 		 * @param n 初始长度
 		 * @param val 初始值
 		 */
-		vector(int n, T val) : _size(n) {
+		vector(int n, T&& val) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
 			for (int i = 0; i < n; ++i) _ptr[i] = val;
@@ -62,7 +64,7 @@ namespace ms {
 		 * @param n 长度
 		 * @param val 覆盖的值
 		 */
-		void assign(int n, T val) {
+		void assign(int n, T&& val) {
 			if (n >= _maxSize) {  // 先扩容
 				_maxSize = n * 2;
 				T* np = new T[_maxSize];
@@ -81,7 +83,7 @@ namespace ms {
 			return _ptr[index];
 		}
 
-		vector& operator=(vector vec) {
+		vector& operator=(vector& vec) {
 			if (_maxSize < vec.size()) {  // 扩容
 				_maxSize = vec.maxSize();
 				delete[] _ptr;
@@ -113,7 +115,7 @@ namespace ms {
 		 * @param index 元素val的最终下标
 		 * @param val 待插入的元素
 		 */
-		void insert(int index, T val) {
+		void insert(int index, T&& val) {
 			if (index > _size) {
 				std::cerr << "Out of size while inserting." << std::endl;
 				exit(1);

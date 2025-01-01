@@ -40,7 +40,7 @@ namespace ms {
 		/**
 		 * @brief 在队尾添加元素
 		 */
-		void push(T & elem) {
+		void push(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
 			_ptr[_tail] = elem;
 			_tail = (_tail + 1) % _maxSize;
@@ -97,14 +97,14 @@ namespace ms {
 		}
 
 	public:
-		queue() : _maxSize(100), _size(0), _head(0), _tail(0) {
+		deque() : _maxSize(100), _size(0), _head(0), _tail(0) {
 			_ptr = new T[100];
 		}
-		queue(int maxSize) : _size(0), _head(0), _tail(0) {
+		deque(int maxSize) : _size(0), _head(0), _tail(0) {
 			_maxSize = maxSize > 10 ? maxSize : 10;
 			_ptr = new T[_maxSize];
 		}
-		~queue() { delete[] _ptr; }
+		~deque() { delete[] _ptr; }
 
 		int size() { return _size; }
 
@@ -117,7 +117,7 @@ namespace ms {
 		/**
 		 * @brief 在队尾添加元素
 		 */
-		void push_back(T& elem) {
+		void push_back(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
 			_ptr[_tail] = elem;
 			_tail = (_tail + 1) % _maxSize;
@@ -127,7 +127,7 @@ namespace ms {
 		/**
 		 * @brief 在队首添加元素
 		 */
-		void push_front(T& elem) {
+		void push_front(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
 			_head = _head == 0 ? _maxSize - 1 : _head - 1;
 			_ptr[_head] = elem;
