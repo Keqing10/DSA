@@ -143,6 +143,6 @@ namespace ms {
 
 		int maxSize() { return _maxSize; }
 
-		T* get_array() { return _ptr; }
+		T* get_ptr() { return _ptr; }
 	};
 }

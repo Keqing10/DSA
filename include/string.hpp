@@ -163,6 +163,14 @@ namespace ms {
 			return *this == s || *this < s;
 		}
 
+		bool operator>(const string& s) {
+			return !(*this == s || *this < s);
+		}
+
+		bool operator>=(const string& s) {
+			return !(*this < s);
+		}
+
 		string operator+(const string& s) {
 			string ans(_capacity + s.capacity());  // 根据容量之和构造新的string对象
 			ans.append(*this);

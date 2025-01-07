@@ -180,4 +180,13 @@ namespace ms {
 			return T[_tail == 0 ? _maxSize - 1 : tail - 1];
 		}
 	};
+
+	template <typename T>
+	class priority_queue {
+	private:
+
+	public:
+		priority_queue() {}
+		~priority_queue() {}
+	};
 }

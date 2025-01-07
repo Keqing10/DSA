@@ -6,8 +6,8 @@
 * [x] `vector`
 * [x] `list`
 * [x] `stack`
-* [x] `queue`
-* [ ] `string`
+* [ ] `queue`
+* [x] `string`
 * [x] `BiTree`
 
 ## 算法

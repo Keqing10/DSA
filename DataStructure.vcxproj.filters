@@ -47,6 +47,12 @@
     <ClInclude Include="include\string.hpp">
       <Filter>头文件\data structure</Filter>
     </ClInclude>
+    <ClInclude Include="include\sort.h">
+      <Filter>头文件\data structure</Filter>
+    </ClInclude>
+    <ClInclude Include="include\heap.hpp">
+      <Filter>头文件\data structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

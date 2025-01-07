@@ -141,6 +141,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\heap.hpp" />
+    <ClInclude Include="include\sort.h" />
     <ClInclude Include="include\string.hpp" />
     <ClInclude Include="include\tree.hpp" />
     <ClInclude Include="include\list.hpp" />

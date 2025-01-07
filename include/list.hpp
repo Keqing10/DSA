@@ -52,8 +52,24 @@ namespace ms {
 		~DLNode() {}
 	};
 
+	/**
+	 * @brief 翻转链表，不带单独头结点
+	 * @param head 链表的第一个元素结点
+	 * @return LNode<T>* 翻转后的链表的第一个元素结点
+	 */
+	template <typename T>
+	LNode<T>* reverse(LNode<T>* head) {
+		LNode nh, * p = head, * q;
+		while (p) {
+			q = p->next;
+			p->next = nh.next;
+			nh.next = p;
+			p = q;
+		}
+		return nh.next;
+	}
 
-	// @todo 是否需要修改全局函数为类的成员函数
+
 	/**
 	 * @brief 翻转链表，不带单独头结点
 	 * @param head 链表的第一个元素结点
