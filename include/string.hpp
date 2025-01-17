@@ -83,7 +83,7 @@ namespace ms {
 
 		int size() const { return _size; }
 		int length() const { return _size; }
-		int capacity() const { return _capacity; }
+		int capacity() const { return _capacity; }  // 实际保存字符容量为_capacity - 1
 
 		char* c_str() { return _ptr; }
 

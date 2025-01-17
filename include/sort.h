@@ -100,7 +100,11 @@ namespace ms {
 	 */
 	template <typename T>
 	void heapSort(T* p, int len) {
-
+		heap<T> hp(p, len);
+		hp.create();
+		for (int i = len - 1; i > -1; --i) {
+			hp.pop();
+		}
 	}
 
 	/**

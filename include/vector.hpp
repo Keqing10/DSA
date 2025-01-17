@@ -98,7 +98,7 @@ namespace ms {
 		 * @brief 在数组尾添加元素
 		 * @param val 
 		 */
-		void push_back(T val) {
+		void push_back(T&& val) {
 			if (_maxSize == _size) _extend();  // 插入前先扩容
 			_ptr[_size++] = val;
 		}
