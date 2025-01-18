@@ -6,7 +6,7 @@
 * [x] `vector`
 * [x] `list`
 * [x] `stack`
-* [ ] `queue`
+* [x] `queue`
 * [x] `string`
 * [x] `BiTree`
 
