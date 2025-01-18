@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "heap.hpp"
+
 namespace ms {
 	template <typename T>
 	class queue {
@@ -184,9 +186,54 @@ namespace ms {
 	template <typename T>
 	class priority_queue {
 	private:
+		int _size, _maxSize;
+		T* _ptr;
+		heap<T> hp;
 
+		void _extend() {
+			T* np = new T[_maxSize * 2];
+			for (int i = 0; i < _size; ++i) np[i] = _ptr[i];
+			delete[] _ptr;
+			_ptr = np;
+			_maxSize *= 2;
+		}
 	public:
-		priority_queue() {}
-		~priority_queue() {}
+		priority_queue() : _size(0), _maxSize(20) {
+			_ptr = new T[_maxSize]; 
+			hp.len = 0;
+			hp.ptr = _ptr;
+		}
+		/**
+		 * @brief 指定初始容量，最小为10
+		 */
+		priority_queue(int n) : _size(0), _maxSize(n > 10 ? n : 10) { 
+			_ptr = new T[_maxSize];
+			hp.len = 0;
+			hp.ptr = _ptr;
+		}
+		~priority_queue() { delete[] _ptr; }
+
+		int size() { return _size; }
+
+		int maxSize() { return _maxSize; }
+
+		bool empty() { return _size == 0; }
+
+		bool full() { return _size == _maxsize; }
+
+		void push(T& t) {
+			if (full()) _extend();
+			hp.insert(t);
+			++_size;
+		}
+
+		T& pop() {
+			--_size();
+			return hp.pop()
+		}
+
+		T& front() {
+			return _ptr[0];
+		}
 	};
 }
