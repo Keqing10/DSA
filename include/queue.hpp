@@ -78,7 +78,7 @@ namespace ms {
 			}
 			// _tail > 0 => _tail - 1
 			// _tail == 0 => _maxSize - 1
-			return T[_tail == 0 ? _maxSize - 1 : tail - 1];
+			return _ptr[_tail == 0 ? _maxSize - 1 : _tail - 1];
 		}
 	};
 
@@ -179,7 +179,7 @@ namespace ms {
 			}
 			// _tail > 0 => _tail - 1
 			// _tail == 0 => _maxSize - 1
-			return T[_tail == 0 ? _maxSize - 1 : tail - 1];
+			return _ptr[_tail == 0 ? _maxSize - 1 : _tail - 1];
 		}
 	};
 
@@ -219,7 +219,7 @@ namespace ms {
 
 		bool empty() { return _size == 0; }
 
-		bool full() { return _size == _maxsize; }
+		bool full() { return _size == _maxSize; }
 
 		void push(T& t) {
 			if (full()) _extend();
@@ -228,8 +228,8 @@ namespace ms {
 		}
 
 		T& pop() {
-			--_size();
-			return hp.pop()
+			--_size;
+			return hp.pop();
 		}
 
 		T& front() {

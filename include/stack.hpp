@@ -30,7 +30,7 @@ namespace ms {
 		~stack() { delete[] _ptr; }
 
 		int size() {
-			retrn _size;
+			return _size;
 		}
 
 		int maxSize() {

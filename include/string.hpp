@@ -223,7 +223,8 @@ namespace ms {
 			if (pos + len > _size) {  // len超出边界时截断；式子取等时恰好到string的末尾
 				len = _size - pos;
 			}
-			return string(_ptr + pos, len);
+			string ans(_ptr + pos, len);
+			return ans;
 		}
 
 		/**
@@ -256,7 +257,10 @@ namespace ms {
 		 * @param len 被删除子串的长度
 		 */
 		string& erase(int pos, int length) {
-			if (pos >= _size) return;
+			if (pos >= _size) {
+				std::cerr << "Out of size while erase().\n";
+				exit(1);
+			}
 			if (pos + length > _size) length = _size - pos;
 			for (int i = pos; i < _size - length; ++i) _ptr[i] = _ptr[i + length];
 			memset(_ptr + _size - length, 0, length);
