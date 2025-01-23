@@ -9,33 +9,13 @@
 #include "stack.hpp"
 #include "string.hpp"
 #include "tree.hpp"
+#include "utils.h"
 #include "vector.hpp"
-
-void ms::Student::set(int _id, bool _male, std::string _name)
-{
-	id = _id;
-	male = _male;
-	name = _name;
-}
-
-void ms::Student::print()
-{
-	if (id == -1)
-		printf("[Student] NULL.\n");
-	else
-		printf("[Student] id = %d, %s, name = %s.\n", id, male ? "male" : "female", name.c_str());
-}
-
-bool ms::Student::operator<(Student stu)
-{
-	//if (id == stu.id) return name < stu.name;  // 应不允许出现相同id
-	return id < stu.id;
-}
 
 void ms::Test::run()
 {
-	test_vector();
-	//test_list();
+	//test_vector();
+	test_list();
 	//test_stack();
 	//test_queue();
 	//test_string();
@@ -45,12 +25,55 @@ void ms::Test::run()
 
 void ms::Test::test_vector()
 {
-	ms::vector<int> v(10, 2);
-	ms::vector<int> v2 = v;
+	TestPrint("构造函数");
+	ms::vector<int> v0;
+	std::cout << "v0: size = " << v0.size() << ", maxSize = " << v0.maxSize() << std::endl;
+	ms::vector<int> v1(10, 2);
+	ms::vector<int> v2(v1);
+	std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.maxSize() << std::endl;
 	for (int i = 0; i < 10; ++i) {
-		std::cout << i << " : " << v2[i] << std::endl;
+		std::cout << "v2[" << i << "] = " << v2[i] << std::endl;
+	}
+	ms::vector<stu> v3(5, stu(0, true, "test"));
+	std::cout << "v3:\n";
+	for (int i = 0; i < 5; ++i) {
+		std::cout << "v3[" << i << "] : ";
+		v3[i].print();
 	}
 
+	TestPrint("assign()");
+	v2.assign(100, 3);
+	std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.maxSize() << std::endl;
+	for (int i = 0; i < 100; ++i) {
+		if (v2[i] != 3) std::cout << "There is an elem != 3 after assign()!\n";
+	}
+
+	TestPrint("operator=");
+	ms::vector<stu> v4 = v3;
+	std::cout << "v4:\n";
+	for (int i = 0; i < 5; ++i) {
+		std::cout << "v4[" << i << "] : ";
+		v4[i].print();
+	}
+
+	TestPrint("push_back(), pop_back(), insert(), erase()");
+	v4.clear();
+	v4.push_back(stu(1, true, "alpha"));
+	v4.push_back(stu(3, false, "gamma"));
+	v4.insert(1, stu(2, true, "beta"));
+	v4.push_back(stu(4, false, "delta"));
+	printf("size:%d\n", v4.size());
+	v4.insert(3, stu());
+	v4.erase(3);
+	std::cout << "v4:\n";
+	for (int i = 0; i < v4.size(); ++i) {
+		std::cout << "v4[" << i << "] : ";
+		v4[i].print();
+	}
+
+	TestPrint("get_ptr()");
+	stu* p = v4.get_ptr();
+	p->print();
 }
 
 void ms::Test::test_list()

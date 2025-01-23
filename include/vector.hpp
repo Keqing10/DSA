@@ -19,12 +19,15 @@ namespace ms {
 			_ptr = np;
 		}
 	public:
+		/**
+		 * @brief 默认构造函数，初始容量默认为100
+		 */
 		vector() : _maxSize(100), _size(0) {
 			_ptr = new T[_maxSize];
 		}
 		/**
 		 * @brief 构造函数
-		 * @param n 初始长度，初始值默认为0
+		 * @param n 初始长度，默认为0
 		 */
 		vector(int n) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
@@ -46,16 +49,6 @@ namespace ms {
 		vector(vector& vec) : _maxSize(vec.maxSize()), _size(vec.size()) {
 			_ptr = new T[_maxSize];
 			for (int i = 0; i < _size; ++i) _ptr[i] = vec[i];
-		}
-		/**
-		 * @brief 使用数组p创建对象
-		 * @param p 输入指针
-		 * @param n 元素个数
-		 */
-		vector(T* p, int n) : _size(n) {
-			_maxSize = n < 50 ? 100 : n * 2;
-			_ptr = new T[_maxSize];
-			for (int i = 0; i < n; ++i) _ptr[i] = p[i];
 		}
 		~vector() { delete[] _ptr; }
 
@@ -123,6 +116,7 @@ namespace ms {
 			if (_maxSize == _size) _extend();
 			for (int i = _size; i > index; --i) _ptr[i] = _ptr[i - 1];
 			_ptr[index] = val;
+			++_size;
 		}
 
 		/**
@@ -144,5 +138,7 @@ namespace ms {
 		int maxSize() { return _maxSize; }
 
 		T* get_ptr() { return _ptr; }
+
+		void clear() { _size = 0; }
 	};
 }

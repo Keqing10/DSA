@@ -18,21 +18,21 @@ namespace ms {
 		LNode(T&& t, LNode* p) : val(t), next(p) {}
 		~LNode() {}
 
-		/**
-		 * @brief 翻转链表，不带单独头结点
-		 * @param head 链表的第一个元素结点
-		 * @return LNode<T>* 翻转后的链表的第一个元素结点
-		 */
-		LNode* reverse() {
-			LNode nh, *p = this, * q;
-			while (p) {
-				q = p->next;
-				p->next = nh.next;
-				nh.next = p;
-				p = q;
-			}
-			return nh.next;
-		}
+		///**
+		// * @brief 翻转链表，不带单独头结点
+		// * @param head 链表的第一个元素结点
+		// * @return LNode<T>* 翻转后的链表的第一个元素结点
+		// */
+		//LNode* reverse() {
+		//	LNode nh, *p = this, * q;
+		//	while (p) {
+		//		q = p->next;
+		//		p->next = nh.next;
+		//		nh.next = p;
+		//		p = q;
+		//	}
+		//	return nh.next;
+		//}
 	};
 
 	/**
