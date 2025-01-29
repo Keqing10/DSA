@@ -13,16 +13,15 @@ namespace ms {
 		LNode* next;
 
 		LNode() : val(T()), next(nullptr) {}
-		LNode(T&& t) : val(t), next(nullptr) {}
-		LNode(LNode* p) : val(T()), next(p) {}
-		LNode(T&& t, LNode* p) : val(t), next(p) {}
+		LNode(T t) : val(t), next(nullptr) {}
+		LNode(T t, LNode* p) : val(t), next(p) {}
 		~LNode() {}
 
-		///**
-		// * @brief 翻转链表，不带单独头结点
-		// * @param head 链表的第一个元素结点
-		// * @return LNode<T>* 翻转后的链表的第一个元素结点
-		// */
+		/**
+		 * @brief 翻转链表，不带单独头结点
+		 * @param head 链表的第一个元素结点
+		 * @return LNode<T>* 翻转后的链表的第一个元素结点
+		 */
 		//LNode* reverse() {
 		//	LNode nh, *p = this, * q;
 		//	while (p) {
@@ -45,10 +44,9 @@ namespace ms {
 		DLNode* prev, * next;
 
 		DLNode() : prev(nullptr), next(nullptr) {}
-		DLNode(T&& t) : val(t), prev(nullptr), next(nullptr) {}
-		DLNode(T&& t, DLNode* p) : val(t), prev(nullptr), next(p) {}
-		DLNode(DLNode* p1, DLNode* p2) : prev(p1), next(p2) {}
-		DLNode(T&& t, DLNode* p1, DLNode* p2) : val(t), prev(p1), next(p2) {}
+		DLNode(T t) : val(t), prev(nullptr), next(nullptr) {}
+		DLNode(T t, DLNode* p) : val(t), prev(nullptr), next(p) {}
+		DLNode(T t, DLNode* p1, DLNode* p2) : val(t), prev(p1), next(p2) {}
 		~DLNode() {}
 	};
 
@@ -59,7 +57,7 @@ namespace ms {
 	 */
 	template <typename T>
 	LNode<T>* reverse(LNode<T>* head) {
-		LNode nh, * p = head, * q;
+		LNode<T> nh, * p = head, * q;
 		while (p) {
 			q = p->next;
 			p->next = nh.next;

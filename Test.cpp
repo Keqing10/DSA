@@ -15,7 +15,7 @@
 void ms::Test::run()
 {
 	//test_vector();
-	test_list();
+	//test_list();
 	//test_stack();
 	//test_queue();
 	//test_string();
@@ -78,27 +78,36 @@ void ms::Test::test_vector()
 
 void ms::Test::test_list()
 {
-	//ms::LNode<int> a(1), b;
-	//a.val = 1;
-	//a.next = &b;
-	//b.val = 2;
-	//ms::LNode<int>* p = a.reverse();
-	//while (p) {
-	//	std::cout << "->" << p->val;
-	//	p = p->next;
-	//}
+	TestPrint("LNode ~ reverse()");
+	ms::LNode<int> a(1), * p = &a;
+	for (int i = 2; i < 11; ++i) {
+		p->next = new LNode<int>(i);
+		p = p->next;
+	}
+	ms::LNode<int>* h = ms::reverse(&a);
+	while (h) {
+		std::cout << "=>" << h->val;
+		h = h->next;
+	}
 
-	//ms::DLNode<int> x, y;
-	//x.val = 1;
-	//x.next = &y;
-	//y.prev = &x;
-	//y.val = 2;
-	//ms::DLNode<int>* q = ms::reverse(&x);
-	//while (q) {
-	//	std::cout << "->" << q->val;
-	//	q = q->next;
-	//}
-
+	TestPrint("DLNode ~ reverse()");
+	ms::DLNode<int> b(1), * q = &b;
+	for (int i = 2; i < 11; ++i) {
+		q->next = new DLNode<int>(i);
+		q->next->prev = q;
+		q = q->next;
+	}
+	ms::DLNode<int>* head = ms::reverse(&b), * tail = nullptr;
+	while (head) {
+		std::cout << " => " << head->val;
+		tail = head;
+		head = head->next;
+	}
+	std::cout << std::endl;
+	while (tail) {
+		std::cout << " => " << tail->val;
+		tail = tail->prev;
+	}
 }
 
 void ms::Test::test_stack()
