@@ -41,9 +41,9 @@ namespace ms {
 		int le = 0, ri = len - 1;
 		T t = p[0];
 		while (le < ri) {
-			while (le < ri && t < p[ri]) --ri;
+			while (le < ri && t <= p[ri]) --ri;
 			p[le] = p[ri];  // p[ri] = t
-			while (le < ri && p[le] < t) ++le;
+			while (le < ri && p[le] <= t) ++le;
 			p[ri] = p[le];  // p[le] = t
 		}
 		p[le] = t;

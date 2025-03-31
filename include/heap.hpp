@@ -6,8 +6,8 @@ namespace ms {
 	 * 实现：堆排序，优先级队列。
 	 * 堆为给定T类型数组，默认为大根堆。建立小根堆可以创建新类，重载“<”实现。
 	 * n个元素下标范围为[0, n-1]
-	 * i的孩子节点：2*i，2*i+1
-	 * i的父节点：i/2.
+	 * i的孩子节点：2*i+1，2*i+2
+	 * i的父节点：(i-1)/2.
 	 */
 	template <typename T>
 	class heap {
@@ -25,11 +25,11 @@ namespace ms {
 		 * @brief 调整以ptr[n]为根的子树
 		 */
 		void adjust(int n) {
-			if (2 * n >= len) return;
-			if ((ptr[n] < ptr[2 * n]) || (2 * n + 1 < len && ptr[n] < ptr[2 * n + 1])) {
+			if (2 * n + 1 >= len) return;
+			if ((ptr[n] < ptr[2 * n + 1]) || (2 * n + 2 < len && ptr[n] < ptr[2 * n + 2])) {
 				int t;
-				if (2 * n + 1 < len) t = (ptr[2 * n] < ptr[2 * n + 1] ? (2 * n + 1) : (2 * n));
-				else t = 2 * n;
+				if (2 * n + 2 < len) t = (ptr[2 * n + 1] < ptr[2 * n + 2] ? (2 * n + 2) : (2 * n + 1));
+				else t = 2 * n + 1;
 				swap(n, t);
 				adjust(t);
 			}
@@ -49,7 +49,7 @@ namespace ms {
 		 * @param len 堆的长度，元素范围为[0, len-1]
 		 */
 		void create() {
-			for (int i = (len - 1) / 2; i > -1; --i) {
+			for (int i = (len - 2) / 2; i > -1; --i) {
 				adjust(i);
 			}
 		}
@@ -70,7 +70,9 @@ namespace ms {
 		 */
 		void insert(T& t) {
 			ptr[len++] = t;
-			adjust(0);
+			for (int i = (len - 2) / 2; i > -1; i = (i - 1) / 2) {
+				adjust(i);
+			}
 		}
 	};
 }
