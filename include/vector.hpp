@@ -41,6 +41,15 @@ namespace ms {
 		vector(int n, T&& val) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
+			//if (n == 1) {
+			//	_ptr[0] = std::move(val);
+			//	return;
+			//}
+			for (int i = 0; i < n; ++i) _ptr[i] = val;
+		}
+		vector(int n, const T& val) : _size(n) {
+			_maxSize = n < 50 ? 100 : n * 2;
+			_ptr = new T[_maxSize];
 			for (int i = 0; i < n; ++i) _ptr[i] = val;
 		}
 		/**

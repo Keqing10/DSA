@@ -57,16 +57,12 @@ namespace ms {
 		/**
 		 * @param ps 通过常量字符串初始化，末尾有'\0'
 		 */
-		string(const char* ps) {
-			string(ps, strlen(ps));
-		}
+		string(const char* ps) : string(ps, strlen(ps)) {}
 		/**
 		 * @param ps 字符数组首地址
 		 * @param len 初始字符串的长度
 		 */
-		string(char* ps, int len) : _size(len) {
-			string(ps, len);
-		}
+		string(char* ps, int len) : string(static_cast<const char*>(ps), len) {}
 		/**
 		 * @brief 复制构造函数
 		 */
@@ -138,7 +134,7 @@ namespace ms {
 		/**
 		 * @brief 比较两个字符串是否相等，比较size和字符内容，不比较capacity
 		 */
-		bool operator==(const string& s) {
+		bool operator==(const string& s) const {
 			if (_size != s.size()) return false;
 			for (int i = 0; i < _size; ++i) {
 				if (_ptr[i] != s[i]) return false;
@@ -149,7 +145,7 @@ namespace ms {
 		/**
 		 * @brief 根据字典序比较两个字符串
 		 */
-		bool operator<(const string& s) {
+		bool operator<(const string& s) const {
 			int len = s.size() < _size ? s.size() : _size;  // 较短字符串的长度
 			for (int i = 0; i < len; ++i) {  // _ptr[i] == s[i]时持续循环
 				if (_ptr[i] < s[i]) return true;
@@ -159,19 +155,19 @@ namespace ms {
 			return false;
 		}
 
-		bool operator<=(const string& s) {
+		bool operator<=(const string& s) const {
 			return *this == s || *this < s;
 		}
 
-		bool operator>(const string& s) {
+		bool operator>(const string& s) const {
 			return !(*this == s || *this < s);
 		}
 
-		bool operator>=(const string& s) {
+		bool operator>=(const string& s) const {
 			return !(*this < s);
 		}
 
-		string operator+(const string& s) {
+		string operator+(const string& s) const {
 			string ans(_capacity + s.capacity());  // 根据容量之和构造新的string对象
 			ans.append(*this);
 			ans.append(s);
@@ -317,7 +313,7 @@ namespace ms {
 		int find(const char* ps) {
 			int len = strlen(ps);
 			int i, j;
-			for (i = 0; j < len &&  i < _size + 1 - len; ++i) {  // i + len <= _size
+			for (i = 0, j = 0; j < len &&  i < _size + 1 - len; ++i) {  // i + len <= _size
 				// i 为起始字符沿着_ptr移动的循环
 				for (j = 0; j < len; ++j) {
 					if (_ptr[i + j] != ps[j]) break;
