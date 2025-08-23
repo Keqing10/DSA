@@ -1,4 +1,9 @@
-﻿.vs
+﻿out
+build
+
+CMakeSettings.json
+
+.vs
 x64
 
 .vcxproj.user
