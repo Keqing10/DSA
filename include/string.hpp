@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <cstdlib>
 #include <cstring>
@@ -7,16 +7,16 @@
 namespace ms {
 	class string {
 	private:
-		int _size, _capacity;  // ´óĞ¡£¬µ±Ç°Èİ»ı£¬±£Ö¤ _size < _capacity£¬Ä©Î²ÓĞ'\0'
+		int _size, _capacity;  // å¤§å°ï¼Œå½“å‰å®¹ç§¯ï¼Œä¿è¯ _size < _capacityï¼Œæœ«å°¾æœ‰'\0'
 		char* _ptr;
 
 		/**
-		 * @brief À©Èİ
+		 * @brief æ‰©å®¹
 		 */
 		void _extend() { _extend(_capacity); }
 		/**
-		 * @brief À©Èİ
-		 * @param len Ô¤¼Æ·ÅÈë×Ö·ûµÄÊıÄ¿
+		 * @brief æ‰©å®¹
+		 * @param len é¢„è®¡æ”¾å…¥å­—ç¬¦çš„æ•°ç›®
 		 */
 		void _extend(int len) {
 			if (len < _capacity) return;
@@ -34,19 +34,19 @@ namespace ms {
 
 	public:
 		/**
-		 * @brief Ä¬ÈÏ¹¹Ôìº¯Êı£¬ÈİÁ¿Îª50
+		 * @brief é»˜è®¤æ„é€ å‡½æ•°ï¼Œå®¹é‡ä¸º50
 		 */
 		string() : _size(0), _capacity(50) { _ptr = new char[_capacity]; memset(_ptr, 0, _capacity); }
 		/**
-		 * @param maxCapacity Ìá¹©ÈİÁ¿µÄ³õÊ¼Öµ£¬×îĞ¡Îª20 
+		 * @param maxCapacity æä¾›å®¹é‡çš„åˆå§‹å€¼ï¼Œæœ€å°ä¸º20 
 		 */
 		string(int maxCapacity) : _size(0), _capacity(maxCapacity > 20 ? maxCapacity : 20) { 
 			_ptr = new char[_capacity];
 			memset(_ptr, 0, _capacity);
 		}
 		/**
-		 * @param ps ×Ö·ûÊı×éÊ×µØÖ·
-		 * @param len ³õÊ¼×Ö·û´®µÄ³¤¶È
+		 * @param ps å­—ç¬¦æ•°ç»„é¦–åœ°å€
+		 * @param len åˆå§‹å­—ç¬¦ä¸²çš„é•¿åº¦
 		 */
 		string(const char* ps, int len) : _size(len) {
 			_capacity = len > 10 ? len * 2 : 20;
@@ -55,23 +55,23 @@ namespace ms {
 			for (int i = 0; i < len; ++i) _ptr[i] = ps[i];
 		}
 		/**
-		 * @param ps Í¨¹ı³£Á¿×Ö·û´®³õÊ¼»¯£¬Ä©Î²ÓĞ'\0'
+		 * @param ps é€šè¿‡å¸¸é‡å­—ç¬¦ä¸²åˆå§‹åŒ–ï¼Œæœ«å°¾æœ‰'\0'
 		 */
 		string(const char* ps) : string(ps, strlen(ps)) {}
 		/**
-		 * @param ps ×Ö·ûÊı×éÊ×µØÖ·
-		 * @param len ³õÊ¼×Ö·û´®µÄ³¤¶È
+		 * @param ps å­—ç¬¦æ•°ç»„é¦–åœ°å€
+		 * @param len åˆå§‹å­—ç¬¦ä¸²çš„é•¿åº¦
 		 */
 		string(char* ps, int len) : string(static_cast<const char*>(ps), len) {}
 		/**
-		 * @brief ¸´ÖÆ¹¹Ôìº¯Êı
+		 * @brief å¤åˆ¶æ„é€ å‡½æ•°
 		 */
 		string(string& s) : _size(s.size()), _capacity(s.capacity()) {
 			_ptr = new char[_capacity];
 			for (int i = 0; i < _size; ++i) _ptr[i] = s[i];
 		}
 		/**
-		 * @brief Îö¹¹º¯Êı
+		 * @brief ææ„å‡½æ•°
 		 */
 		~string() {
 			delete[] _ptr;
@@ -79,16 +79,16 @@ namespace ms {
 
 		int size() const { return _size; }
 		int length() const { return _size; }
-		int capacity() const { return _capacity; }  // Êµ¼Ê±£´æ×Ö·ûÈİÁ¿Îª_capacity - 1
+		int capacity() const { return _capacity; }  // å®é™…ä¿å­˜å­—ç¬¦å®¹é‡ä¸º_capacity - 1
 
 		char* c_str() { return _ptr; }
 
 		bool empty() const { return _size == 0; }
 
 		/**
-		 * @brief ÖØÔØ[]
-		 * @param i ÏÂ±ê
-		 * @return ÏÂ±êi´¦×Ö·ûµÄÒıÓÃ
+		 * @brief é‡è½½[]
+		 * @param i ä¸‹æ ‡
+		 * @return ä¸‹æ ‡iå¤„å­—ç¬¦çš„å¼•ç”¨
 		 */
 		char& operator[](int i) {
 			if (i < 0 || i >= _size) {
@@ -99,9 +99,9 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ÖØÔØ[]£¬constĞŞÊÎ
-		 * @param i ÏÂ±ê
-		 * @return ÏÂ±êi´¦µÄ×Ö·û£¬·ÇÒıÓÃ
+		 * @brief é‡è½½[]ï¼Œconstä¿®é¥°
+		 * @param i ä¸‹æ ‡
+		 * @return ä¸‹æ ‡iå¤„çš„å­—ç¬¦ï¼Œéå¼•ç”¨
 		 */
 		char operator[] (int i) const {
 			if (i < 0 || i >= _size) {
@@ -132,7 +132,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ±È½ÏÁ½¸ö×Ö·û´®ÊÇ·ñÏàµÈ£¬±È½ÏsizeºÍ×Ö·ûÄÚÈİ£¬²»±È½Ïcapacity
+		 * @brief æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ï¼Œæ¯”è¾ƒsizeå’Œå­—ç¬¦å†…å®¹ï¼Œä¸æ¯”è¾ƒcapacity
 		 */
 		bool operator==(const string& s) const {
 			if (_size != s.size()) return false;
@@ -143,11 +143,11 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ¸ù¾İ×ÖµäĞò±È½ÏÁ½¸ö×Ö·û´®
+		 * @brief æ ¹æ®å­—å…¸åºæ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²
 		 */
 		bool operator<(const string& s) const {
-			int len = s.size() < _size ? s.size() : _size;  // ½Ï¶Ì×Ö·û´®µÄ³¤¶È
-			for (int i = 0; i < len; ++i) {  // _ptr[i] == s[i]Ê±³ÖĞøÑ­»·
+			int len = s.size() < _size ? s.size() : _size;  // è¾ƒçŸ­å­—ç¬¦ä¸²çš„é•¿åº¦
+			for (int i = 0; i < len; ++i) {  // _ptr[i] == s[i]æ—¶æŒç»­å¾ªç¯
 				if (_ptr[i] < s[i]) return true;
 				else if (_ptr[i] > s[i]) return false;
 			}
@@ -168,7 +168,7 @@ namespace ms {
 		}
 
 		string operator+(const string& s) const {
-			string ans(_capacity + s.capacity());  // ¸ù¾İÈİÁ¿Ö®ºÍ¹¹ÔìĞÂµÄstring¶ÔÏó
+			string ans(_capacity + s.capacity());  // æ ¹æ®å®¹é‡ä¹‹å’Œæ„é€ æ–°çš„stringå¯¹è±¡
 			ans.append(*this);
 			ans.append(s);
 			return ans;
@@ -188,7 +188,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ÔÚ×Ö·û´®¸½¼Ó×Ö·û´®¡£×¢ÒâÓĞ¿ÉÄÜµ÷ÓÃs.append(s)¡£
+		 * @brief åœ¨å­—ç¬¦ä¸²é™„åŠ å­—ç¬¦ä¸²ã€‚æ³¨æ„æœ‰å¯èƒ½è°ƒç”¨s.append(s)ã€‚
 		 */
 		string& append(const string& s) {
 			if (_size + s.size() > _capacity - 3) {  // _size + 1 + s.size() + 1 >= _capacity
@@ -202,7 +202,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ÔÚ×Ö·û´®Î²¸½¼Óµ¥¸ö×Ö·û
+		 * @brief åœ¨å­—ç¬¦ä¸²å°¾é™„åŠ å•ä¸ªå­—ç¬¦
 		 */
 		string& append(char c) {
 			if (full()) _extend();
@@ -211,12 +211,12 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ·µ»Ø´Ópos¿ªÊ¼³¤¶ÈÎªlenµÄ×Ó´®
-		 * @param pos ÆğÊ¼×Ö·ûµÄÏÂ±ê
-		 * @param len ×Ó´®³¤¶È
+		 * @brief è¿”å›ä»poså¼€å§‹é•¿åº¦ä¸ºlençš„å­ä¸²
+		 * @param pos èµ·å§‹å­—ç¬¦çš„ä¸‹æ ‡
+		 * @param len å­ä¸²é•¿åº¦
 		 */
 		string substr(int pos, int len) {
-			if (pos + len > _size) {  // len³¬³ö±ß½çÊ±½Ø¶Ï£»Ê½×ÓÈ¡µÈÊ±Ç¡ºÃµ½stringµÄÄ©Î²
+			if (pos + len > _size) {  // lenè¶…å‡ºè¾¹ç•Œæ—¶æˆªæ–­ï¼›å¼å­å–ç­‰æ—¶æ°å¥½åˆ°stringçš„æœ«å°¾
 				len = _size - pos;
 			}
 			string ans(_ptr + pos, len);
@@ -224,9 +224,9 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ²åÈëµ¥¸ö×Ö·û
-		 * @param pos ²åÈë×Ö·ûµÄÎ»ÖÃ£¬²åÈëºóÊÇ¸Ã×Ö·ûµÄÏÂ±ê
-		 * @param c ±»²åÈëµÄ×Ö·û
+		 * @brief æ’å…¥å•ä¸ªå­—ç¬¦
+		 * @param pos æ’å…¥å­—ç¬¦çš„ä½ç½®ï¼Œæ’å…¥åæ˜¯è¯¥å­—ç¬¦çš„ä¸‹æ ‡
+		 * @param c è¢«æ’å…¥çš„å­—ç¬¦
 		 */
 		string& insert(int pos, char c) {
 			if (full()) _extend();
@@ -235,22 +235,22 @@ namespace ms {
 			return *this;
 		}
 		/**
-		 * @brief ²åÈë×Ö·û´®
-		 * @param pos ±»²åÈëµÄÎ»ÖÃ£¬²åÈëºóÊÇ±»²åÈë´®Ê××Ö·ûµÄÏÂ±ê
-		 * @param ps ±»²åÈëµÄ×Ö·û´®£¬ÒÔ'\0'½áÎ²
+		 * @brief æ’å…¥å­—ç¬¦ä¸²
+		 * @param pos è¢«æ’å…¥çš„ä½ç½®ï¼Œæ’å…¥åæ˜¯è¢«æ’å…¥ä¸²é¦–å­—ç¬¦çš„ä¸‹æ ‡
+		 * @param ps è¢«æ’å…¥çš„å­—ç¬¦ä¸²ï¼Œä»¥'\0'ç»“å°¾
 		 */
 		string& insert(int pos, const char* ps) {
 			int len = strlen(ps);
 			if (_size + len + 1 > _capacity) _extend(_size + len);
-			for (int i = _size; i >= pos; --i) _ptr[i + len] = _ptr[i];  // ×Ö·ûÏòÓÒÒÆ¶¯len
+			for (int i = _size; i >= pos; --i) _ptr[i + len] = _ptr[i];  // å­—ç¬¦å‘å³ç§»åŠ¨len
 			for (int i = 0; i < len; ++i) _ptr[i + pos] = ps[i];
 			return *this;
 		}
 
 		/**
-		 * @brief É¾³ı×Ó´®
-		 * @param pos ±»É¾³ı×Ó´®µÄÆğÊ¼Î»ÖÃ
-		 * @param len ±»É¾³ı×Ó´®µÄ³¤¶È
+		 * @brief åˆ é™¤å­ä¸²
+		 * @param pos è¢«åˆ é™¤å­ä¸²çš„èµ·å§‹ä½ç½®
+		 * @param len è¢«åˆ é™¤å­ä¸²çš„é•¿åº¦
 		 */
 		string& erase(int pos, int length) {
 			if (pos >= _size) {
@@ -264,7 +264,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief Çå¿Õ×Ö·û´®£¬È«¸³Öµ0£¬size¹é0£¬capacity²»±ä¡£
+		 * @brief æ¸…ç©ºå­—ç¬¦ä¸²ï¼Œå…¨èµ‹å€¼0ï¼Œsizeå½’0ï¼Œcapacityä¸å˜ã€‚
 		 */
 		void clear() {
 			memset(_ptr, 0, _size);
@@ -272,8 +272,8 @@ namespace ms {
 		}
 
 		/**
-		 * @brief °´ÕÕ×ÖµäĞò±È½ÏÁ½¸ö×Ö·û´®
-		 * @return *this-sµÄ·ûºÅ£¬0£ºÏàµÈ£»1£º×ó£¾ÓÒ£»-1£º×ó£¼ÓÒ¡£
+		 * @brief æŒ‰ç…§å­—å…¸åºæ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²
+		 * @return *this-sçš„ç¬¦å·ï¼Œ0ï¼šç›¸ç­‰ï¼›1ï¼šå·¦ï¼å³ï¼›-1ï¼šå·¦ï¼œå³ã€‚
 		 */
 		int compare(string s) {
 			if (*this == s) return 0;
@@ -296,8 +296,8 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ²éÕÒ×Ö·ûc£¬·µ»ØÏÂ±ê
-		 * @return Èô²éÕÒ³É¹¦·µ»ØÏÂ±ê£»²éÕÒÊ§°Ü·µ»Ø-1.
+		 * @brief æŸ¥æ‰¾å­—ç¬¦cï¼Œè¿”å›ä¸‹æ ‡
+		 * @return è‹¥æŸ¥æ‰¾æˆåŠŸè¿”å›ä¸‹æ ‡ï¼›æŸ¥æ‰¾å¤±è´¥è¿”å›-1.
 		 */
 		int find(char c) {
 			for (int i = 0; i < _size; ++i) {
@@ -307,25 +307,25 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ²éÕÒ×Ó´®ps£¬·µ»ØÆğÊ¼×Ö·ûÏÂ±ê
-		 * @return Èô²éÕÒ³É¹¦·µ»ØÆğÊ¼×Ö·ûÏÂ±ê£»²éÕÒÊ§°Ü·µ»Ø-1.
+		 * @brief æŸ¥æ‰¾å­ä¸²psï¼Œè¿”å›èµ·å§‹å­—ç¬¦ä¸‹æ ‡
+		 * @return è‹¥æŸ¥æ‰¾æˆåŠŸè¿”å›èµ·å§‹å­—ç¬¦ä¸‹æ ‡ï¼›æŸ¥æ‰¾å¤±è´¥è¿”å›-1.
 		 */
 		int find(const char* ps) {
 			int len = strlen(ps);
 			int i, j;
 			for (i = 0, j = 0; j < len &&  i < _size + 1 - len; ++i) {  // i + len <= _size
-				// i ÎªÆğÊ¼×Ö·ûÑØ×Å_ptrÒÆ¶¯µÄÑ­»·
+				// i ä¸ºèµ·å§‹å­—ç¬¦æ²¿ç€_ptrç§»åŠ¨çš„å¾ªç¯
 				for (j = 0; j < len; ++j) {
 					if (_ptr[i + j] != ps[j]) break;
 				}
-				// Èô²éÕÒ³É¹¦£¬j == len
+				// è‹¥æŸ¥æ‰¾æˆåŠŸï¼Œj == len
 			}
 			if (j == len) return i;
 			else return -1;
 		}
 
 		/**
-		 * @brief ½«×Ö·û´®ÆğÊ¼Î»ÖÃpos£¬³¤¶ÈlengthµÄ×Ó´®Ìæ»»Îªps
+		 * @brief å°†å­—ç¬¦ä¸²èµ·å§‹ä½ç½®posï¼Œé•¿åº¦lengthçš„å­ä¸²æ›¿æ¢ä¸ºps
 		 */
 		string& replace(int pos, int length, const char* ps) {
 			int lenps = strlen(ps);
@@ -333,10 +333,10 @@ namespace ms {
 			for (int i = 0; i < lenmin; ++i) {
 				_ptr[i + pos] = ps[i];
 			}
-			if (lenmin < length) {  // lenps < length£¬ĞèÒªÉ¾³ıÖĞ¼ä²¿·Ö
+			if (lenmin < length) {  // lenps < lengthï¼Œéœ€è¦åˆ é™¤ä¸­é—´éƒ¨åˆ†
 				erase(pos + lenmin, length - lenmin);
 			}
-			else if (lenmin < lenps) {  // length < lenps£¬ĞèÒªÔÙ²åÈëpsÊ£Óà²¿·Ö
+			else if (lenmin < lenps) {  // length < lenpsï¼Œéœ€è¦å†æ’å…¥pså‰©ä½™éƒ¨åˆ†
 				insert(pos + lenmin, ps + lenmin);
 			}
 			return *this;

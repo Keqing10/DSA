@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 
 namespace ms {
 	/**
-	 * @brief µ¥Á´±í½áµãÀà
+	 * @brief å•é“¾è¡¨ç»“ç‚¹ç±»
 	 */
 	template <typename T>
 	class LNode {
@@ -18,9 +18,9 @@ namespace ms {
 		~LNode() {}
 
 		/**
-		 * @brief ·­×ªÁ´±í£¬²»´øµ¥¶ÀÍ·½áµã
-		 * @param head Á´±íµÄµÚÒ»¸öÔªËØ½áµã
-		 * @return LNode<T>* ·­×ªºóµÄÁ´±íµÄµÚÒ»¸öÔªËØ½áµã
+		 * @brief ç¿»è½¬é“¾è¡¨ï¼Œä¸å¸¦å•ç‹¬å¤´ç»“ç‚¹
+		 * @param head é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
+		 * @return LNode<T>* ç¿»è½¬åçš„é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
 		 */
 		//LNode* reverse() {
 		//	LNode nh, *p = this, * q;
@@ -35,7 +35,7 @@ namespace ms {
 	};
 
 	/**
-	 * @brief Ë«Á´±í½áµãÀà
+	 * @brief åŒé“¾è¡¨ç»“ç‚¹ç±»
 	 */
 	template <typename T>
 	class DLNode {
@@ -51,9 +51,9 @@ namespace ms {
 	};
 
 	/**
-	 * @brief ·­×ªÁ´±í£¬²»´øµ¥¶ÀÍ·½áµã
-	 * @param head Á´±íµÄµÚÒ»¸öÔªËØ½áµã
-	 * @return LNode<T>* ·­×ªºóµÄÁ´±íµÄµÚÒ»¸öÔªËØ½áµã
+	 * @brief ç¿»è½¬é“¾è¡¨ï¼Œä¸å¸¦å•ç‹¬å¤´ç»“ç‚¹
+	 * @param head é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
+	 * @return LNode<T>* ç¿»è½¬åçš„é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
 	 */
 	template <typename T>
 	LNode<T>* reverse(LNode<T>* head) {
@@ -69,9 +69,9 @@ namespace ms {
 
 
 	/**
-	 * @brief ·­×ªÁ´±í£¬²»´øµ¥¶ÀÍ·½áµã
-	 * @param head Á´±íµÄµÚÒ»¸öÔªËØ½áµã
-	 * @return DLNode<T>* ·­×ªºóµÄÁ´±íµÄµÚÒ»¸öÔªËØ½áµã
+	 * @brief ç¿»è½¬é“¾è¡¨ï¼Œä¸å¸¦å•ç‹¬å¤´ç»“ç‚¹
+	 * @param head é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
+	 * @return DLNode<T>* ç¿»è½¬åçš„é“¾è¡¨çš„ç¬¬ä¸€ä¸ªå…ƒç´ ç»“ç‚¹
 	 */
 	template <typename T>
 	DLNode<T>* reverse(DLNode<T>* head) {

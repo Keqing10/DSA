@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 
@@ -8,7 +8,7 @@ namespace ms {
 	template <typename T>
 	class queue {
 	private:
-		int _maxSize, _size, _head, _tail;  // ×î´ó³¤¶È£¬µ±Ç°³¤¶È£¬Í·ÔªËØÏÂ±ê£¬Î²ÔªËØÏÂ±ê+1
+		int _maxSize, _size, _head, _tail;  // æœ€å¤§é•¿åº¦ï¼Œå½“å‰é•¿åº¦ï¼Œå¤´å…ƒç´ ä¸‹æ ‡ï¼Œå°¾å…ƒç´ ä¸‹æ ‡+1
 		T* _ptr;
 
 		void _extend() {
@@ -40,7 +40,7 @@ namespace ms {
 		bool full() { return _size + 1 == _maxSize; }
 
 		/**
-		 * @brief ÔÚ¶ÓÎ²Ìí¼ÓÔªËØ
+		 * @brief åœ¨é˜Ÿå°¾æ·»åŠ å…ƒç´ 
 		 */
 		void push(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
@@ -50,7 +50,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief µ¯³ö¶ÓÊ×ÔªËØ
+		 * @brief å¼¹å‡ºé˜Ÿé¦–å…ƒç´ 
 		 */
 		T& pop() {
 			if (_size == 0) {
@@ -117,7 +117,7 @@ namespace ms {
 		bool full() { return _size + 1 == _maxSize; }
 
 		/**
-		 * @brief ÔÚ¶ÓÎ²Ìí¼ÓÔªËØ
+		 * @brief åœ¨é˜Ÿå°¾æ·»åŠ å…ƒç´ 
 		 */
 		void push_back(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
@@ -127,7 +127,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ÔÚ¶ÓÊ×Ìí¼ÓÔªËØ
+		 * @brief åœ¨é˜Ÿé¦–æ·»åŠ å…ƒç´ 
 		 */
 		void push_front(T&& elem) {
 			if (_size + 1 == _maxSize) _extend();
@@ -137,7 +137,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief µ¯³ö¶ÓÊ×ÔªËØ
+		 * @brief å¼¹å‡ºé˜Ÿé¦–å…ƒç´ 
 		 */
 		T& pop_front() {
 			if (_size == 0) {
@@ -151,7 +151,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief µ¯³ö¶ÓÎ²ÔªËØ
+		 * @brief å¼¹å‡ºé˜Ÿå°¾å…ƒç´ 
 		 * @return 
 		 */
 		T& pop_back() {
@@ -204,7 +204,7 @@ namespace ms {
 			hp.ptr = _ptr;
 		}
 		/**
-		 * @brief Ö¸¶¨³õÊ¼ÈÝÁ¿£¬×îÐ¡Îª10
+		 * @brief æŒ‡å®šåˆå§‹å®¹é‡ï¼Œæœ€å°ä¸º10
 		 */
 		priority_queue(int n) : _size(0), _maxSize(n > 10 ? n : 10) { 
 			_ptr = new T[_maxSize];

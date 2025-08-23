@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 
@@ -8,9 +8,9 @@ namespace ms {
 	template <typename T>
 	class vector {
 	private:
-		int _maxSize, _size;  // ×î´ó³¤¶ÈÓëµ±Ç°³¤¶È
+		int _maxSize, _size;  // æœ€å¤§é•¿åº¦ä¸å½“å‰é•¿åº¦
 		T* _ptr;
-		// À©Èİ
+		// æ‰©å®¹
 		void _extend() {
 			_maxSize *= 2;
 			T* np = new T[_maxSize];
@@ -20,23 +20,23 @@ namespace ms {
 		}
 	public:
 		/**
-		 * @brief Ä¬ÈÏ¹¹Ôìº¯Êı£¬³õÊ¼ÈİÁ¿Ä¬ÈÏÎª100
+		 * @brief é»˜è®¤æ„é€ å‡½æ•°ï¼Œåˆå§‹å®¹é‡é»˜è®¤ä¸º100
 		 */
 		vector() : _maxSize(100), _size(0) {
 			_ptr = new T[_maxSize];
 		}
 		/**
-		 * @brief ¹¹Ôìº¯Êı
-		 * @param n ³õÊ¼³¤¶È£¬Ä¬ÈÏÎª0
+		 * @brief æ„é€ å‡½æ•°
+		 * @param n åˆå§‹é•¿åº¦ï¼Œé»˜è®¤ä¸º0
 		 */
 		vector(int n) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
 		}
 		/**
-		 * @brief ¹¹Ôìº¯Êı
-		 * @param n ³õÊ¼³¤¶È
-		 * @param val ³õÊ¼Öµ
+		 * @brief æ„é€ å‡½æ•°
+		 * @param n åˆå§‹é•¿åº¦
+		 * @param val åˆå§‹å€¼
 		 */
 		vector(int n, T&& val) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
@@ -53,7 +53,7 @@ namespace ms {
 			for (int i = 0; i < n; ++i) _ptr[i] = val;
 		}
 		/**
-		 * @brief ¸´ÖÆ¹¹Ôìº¯Êı
+		 * @brief å¤åˆ¶æ„é€ å‡½æ•°
 		 */
 		vector(vector& vec) : _maxSize(vec.maxSize()), _size(vec.size()) {
 			_ptr = new T[_maxSize];
@@ -62,12 +62,12 @@ namespace ms {
 		~vector() { delete[] _ptr; }
 
 		/**
-		 * @brief ÖØĞÂÉùÃ÷Êı×é³¤¶ÈºÍ³õÊ¼Öµ
-		 * @param n ³¤¶È
-		 * @param val ¸²¸ÇµÄÖµ
+		 * @brief é‡æ–°å£°æ˜æ•°ç»„é•¿åº¦å’Œåˆå§‹å€¼
+		 * @param n é•¿åº¦
+		 * @param val è¦†ç›–çš„å€¼
 		 */
 		void assign(int n, T&& val) {
-			if (n >= _maxSize) {  // ÏÈÀ©Èİ
+			if (n >= _maxSize) {  // å…ˆæ‰©å®¹
 				_maxSize = n * 2;
 				T* np = new T[_maxSize];
 				delete[] _ptr;
@@ -86,7 +86,7 @@ namespace ms {
 		}
 
 		vector& operator=(vector& vec) {
-			if (_maxSize < vec.size()) {  // À©Èİ
+			if (_maxSize < vec.size()) {  // æ‰©å®¹
 				_maxSize = vec.maxSize();
 				delete[] _ptr;
 				_ptr = new T[_maxSize];
@@ -97,25 +97,25 @@ namespace ms {
 		}
 
 		/**
-		 * @brief ÔÚÊı×éÎ²Ìí¼ÓÔªËØ
+		 * @brief åœ¨æ•°ç»„å°¾æ·»åŠ å…ƒç´ 
 		 * @param val 
 		 */
 		void push_back(T&& val) {
-			if (_maxSize == _size) _extend();  // ²åÈëÇ°ÏÈÀ©Èİ
+			if (_maxSize == _size) _extend();  // æ’å…¥å‰å…ˆæ‰©å®¹
 			_ptr[_size++] = val;
 		}
 
 		/**
-		 * @brief É¾³ıÊı×éÎ²ÔªËØ²¢·µ»Ø
+		 * @brief åˆ é™¤æ•°ç»„å°¾å…ƒç´ å¹¶è¿”å›
 		 */
 		T pop_back(){
 			return _ptr[--_size];
 		}
 
 		/**
-		 * @brief ÔÚÏÂ±êindex´¦Ìí¼ÓÔªËØval
-		 * @param index ÔªËØvalµÄ×îÖÕÏÂ±ê
-		 * @param val ´ı²åÈëµÄÔªËØ
+		 * @brief åœ¨ä¸‹æ ‡indexå¤„æ·»åŠ å…ƒç´ val
+		 * @param index å…ƒç´ valçš„æœ€ç»ˆä¸‹æ ‡
+		 * @param val å¾…æ’å…¥çš„å…ƒç´ 
 		 */
 		void insert(int index, T&& val) {
 			if (index > _size) {
@@ -129,7 +129,7 @@ namespace ms {
 		}
 
 		/**
-		 * @brief É¾³ıÏÂ±êÎªindexµÄÔªËØ
+		 * @brief åˆ é™¤ä¸‹æ ‡ä¸ºindexçš„å…ƒç´ 
 		 */
 		void erase(int index) {
 			if (index >= _size) {

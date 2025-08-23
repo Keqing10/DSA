@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 
@@ -21,7 +21,7 @@ namespace ms {
 			_ptr = new T[_maxSize];
 		}
 		/**
-		 * @param n ³õÊ¼Õ»µÄ×î´óÈÝÁ¿¡£×îÐ¡Îª10£¬n > 10Ê±nÓÐÐ§
+		 * @param n åˆå§‹æ ˆçš„æœ€å¤§å®¹é‡ã€‚æœ€å°ä¸º10ï¼Œn > 10æ—¶næœ‰æ•ˆ
 		 */
 		stack(int n) : _size(0) {
 			_maxSize = n > 10 ? n : 10;
@@ -63,3 +63,4 @@ namespace ms {
 		}
 	};
 }
+

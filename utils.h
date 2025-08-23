@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 
 namespace ms {
 	class Student {
 	public:
-		int id;  // ºÏ·¨idÎª·Ç¸ºÕûÊı£¬-1±íÊ¾Î´ÓĞĞ§¸³Öµ
+		int id;  // åˆæ³•idä¸ºéè´Ÿæ•´æ•°ï¼Œ-1è¡¨ç¤ºæœªæœ‰æ•ˆèµ‹å€¼
 		bool male;
 		std::string name;
 
@@ -15,10 +15,10 @@ namespace ms {
 		Student(Student& stu) : id(stu.id), male(stu.male), name(stu.name) {}
 		~Student() {}
 
-		void set(int _id, bool _male, std::string _name);  // ÖØĞÂÉèÖÃ³ÉÔ±±äÁ¿
-		void print();  // Êä³ö³ÉÔ±±äÁ¿ĞÅÏ¢
+		void set(int _id, bool _male, std::string _name);  // é‡æ–°è®¾ç½®æˆå‘˜å˜é‡
+		void print();  // è¾“å‡ºæˆå‘˜å˜é‡ä¿¡æ¯
 
-		bool operator<(Student stu);  // ¸ù¾İidÅÅĞò
+		bool operator<(Student stu);  // æ ¹æ®idæ’åº
 		void operator=(Student stu);
 	};
 }

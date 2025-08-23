@@ -1,4 +1,4 @@
-#include "utils.h"
+ï»¿#include "utils.h"
 
 #include <cstdio>
 
@@ -24,7 +24,7 @@ void ms::Student::print()
 bool ms::Student::operator<(Student stu)
 {
 	if (id == stu.id && male == stu.male && name == stu.name) return true;
-	// ÍêÈ«ÏàÍ¬Ê±·µ»Øtrue£¬Ê¹µÃÉýÐòÅÅÐò±£³ÖÎÈ¶¨ÐÔ
+	// å®Œå…¨ç›¸åŒæ—¶è¿”å›žtrueï¼Œä½¿å¾—å‡åºæŽ’åºä¿æŒç¨³å®šæ€§
 	return id < stu.id;
 }
 
@@ -34,3 +34,4 @@ void ms::Student::operator=(Student stu)
 	male = stu.male;
 	name = stu.name;
 }
+

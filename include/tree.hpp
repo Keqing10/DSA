@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 
@@ -7,7 +7,7 @@
 
 namespace ms {
 	/**
-     * @brief ¶ş²æÊ÷½áµãÀà
+     * @brief äºŒå‰æ ‘ç»“ç‚¹ç±»
      */
 	template <typename T>
 	class TNode {
@@ -23,16 +23,16 @@ namespace ms {
 	};
 
 	/**
-	 * @brief ¶Ô¶ş²æÊ÷½áµã½øĞĞ²Ù×÷µÄº¯ÊıÖ¸Õë
+	 * @brief å¯¹äºŒå‰æ ‘ç»“ç‚¹è¿›è¡Œæ“ä½œçš„å‡½æ•°æŒ‡é’ˆ
 	 * @tparam T 
 	 */
 	template <typename T>
 	using TOP = void (*)(TNode<T>*);
 
 	/**
-	 * @brief ÏÈĞò±éÀú£¬µİ¹éĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief å…ˆåºéå†ï¼Œé€’å½’å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void dfs11(TNode<T>* root, TOP<T> op) {
@@ -43,9 +43,9 @@ namespace ms {
 	}
 
 	/**
-	 * @brief ÏÈĞò±éÀú£¬µü´úĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief å…ˆåºéå†ï¼Œè¿­ä»£å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void dfs12(TNode<T>* root, TOP<T> op) {
@@ -61,9 +61,9 @@ namespace ms {
 	}
 
 	/**
-	 * @brief ÖĞĞò±éÀú£¬µİ¹éĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief ä¸­åºéå†ï¼Œé€’å½’å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void dfs21(TNode<T>* root, TOP<T> op) {
@@ -74,9 +74,9 @@ namespace ms {
 	}
 
 	/**
-	 * @brief ÖĞĞò±éÀú£¬µü´úĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief ä¸­åºéå†ï¼Œè¿­ä»£å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void dfs22(TNode<T>* root, TOP<T> op) {
@@ -94,9 +94,9 @@ namespace ms {
 	}
 
 	/**
-	 * @brief ºóĞò±éÀú£¬µİ¹éĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief ååºéå†ï¼Œé€’å½’å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void dfs3(TNode<T>* root, TOP<T> op) {
@@ -107,9 +107,9 @@ namespace ms {
 	}
 	
 	/**
-	 * @brief ²ã´Î±éÀú£¬µü´úĞÎÊ½
-	 * @param root Ê÷µÄ¸ù½áµã 
-	 * @param op ·ÃÎÊ½áµãµÄº¯ÊıÖ¸Õë
+	 * @brief å±‚æ¬¡éå†ï¼Œè¿­ä»£å½¢å¼
+	 * @param root æ ‘çš„æ ¹ç»“ç‚¹ 
+	 * @param op è®¿é—®ç»“ç‚¹çš„å‡½æ•°æŒ‡é’ˆ
 	 */
 	template <typename T>
 	void bfs(TNode<T>* root, TOP<T> op) {
