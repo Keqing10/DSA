@@ -1,19 +1,14 @@
 ﻿#pragma once
 
 namespace ms {
-    class Test {
-    public:
-        Test() {}
-        ~Test() {}
-        static void run();
+    void run();
 
-        static void test_vector();
-        static void test_list();
-        static void test_stack();
-        static void test_queue();
-        static void test_string();
-        static void test_tree();
-        static void test_sort();
-    };
+    void test_vector();
+    void test_list();
+    void test_stack();
+    void test_queue();
+    void test_string();
+    void test_tree();
+    void test_sort();
 }
 

@@ -21,7 +21,7 @@ void ms::Student::print()
 		printf("[Student] id = %d, %s, name = \"%s\".\n", id, male ? "male" : "female", name.c_str());
 }
 
-bool ms::Student::operator<(Student stu)
+bool ms::Student::operator<(Student stu) const
 {
 	if (id == stu.id && male == stu.male && name == stu.name) return true;
 	// 完全相同时返回true，使得升序排序保持稳定性

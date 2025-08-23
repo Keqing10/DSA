@@ -18,7 +18,7 @@ namespace ms {
 		void set(int _id, bool _male, std::string _name);  // 重新设置成员变量
 		void print();  // 输出成员变量信息
 
-		bool operator<(Student stu);  // 根据id排序
+		bool operator<(Student stu) const;  // 根据id排序
 		void operator=(Student stu);
 	};
 }

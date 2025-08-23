@@ -12,7 +12,7 @@
 #include "utils.h"
 #include "vector.hpp"
 
-void ms::Test::run()
+void ms::run()
 {
     test_vector();
     //test_list();
@@ -23,7 +23,7 @@ void ms::Test::run()
     //test_sort();
 }
 
-void ms::Test::test_vector()
+void ms::test_vector()
 {
     TestPrint("构造函数");
     ms::vector<int> v0;
@@ -62,7 +62,7 @@ void ms::Test::test_vector()
     v4.push_back(stu(3, false, "gamma"));
     v4.insert(1, stu(2, true, "beta"));
     v4.push_back(stu(4, false, "delta"));
-    printf("size:%d\n", v4.size());
+    std::cout << "size:" << v4.size() << "\n";
     v4.insert(3, stu());
     v4.erase(3);
     std::cout << "v4:\n";
@@ -76,7 +76,7 @@ void ms::Test::test_vector()
     p->print();
 }
 
-void ms::Test::test_list()
+void ms::test_list()
 {
     TestPrint("LNode ~ reverse()");
     ms::LNode<int> a(1), * p = &a;
@@ -110,23 +110,23 @@ void ms::Test::test_list()
     }
 }
 
-void ms::Test::test_stack()
+void ms::test_stack()
 {
 }
 
-void ms::Test::test_queue()
+void ms::test_queue()
 {
 }
 
-void ms::Test::test_string()
+void ms::test_string()
 {
 }
 
-void ms::Test::test_tree()
+void ms::test_tree()
 {
 }
 
-void ms::Test::test_sort()
+void ms::test_sort()
 {
 }
 
