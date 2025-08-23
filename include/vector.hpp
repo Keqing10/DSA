@@ -2,19 +2,17 @@
 
 #include <iostream>
 
-#include "list.hpp"
-
 namespace ms {
 	template <typename T>
 	class vector {
 	private:
-		int _maxSize, _size;  // 最大长度与当前长度
+		size_t _maxSize, _size;  // 最大长度与当前长度
 		T* _ptr;
 		// 扩容
 		void _extend() {
 			_maxSize *= 2;
 			T* np = new T[_maxSize];
-			for (int i = 0; i < _size; ++i) np[i] = _ptr[i];
+			for (size_t i = 0; i < _size; ++i) np[i] = _ptr[i];
 			delete[] _ptr;
 			_ptr = np;
 		}
@@ -29,7 +27,7 @@ namespace ms {
 		 * @brief 构造函数
 		 * @param n 初始长度，默认为0
 		 */
-		vector(int n) : _size(n) {
+		vector(size_t n) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
 		}
@@ -38,26 +36,26 @@ namespace ms {
 		 * @param n 初始长度
 		 * @param val 初始值
 		 */
-		vector(int n, T&& val) : _size(n) {
+		vector(size_t n, T&& val) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
 			//if (n == 1) {
 			//	_ptr[0] = std::move(val);
 			//	return;
 			//}
-			for (int i = 0; i < n; ++i) _ptr[i] = val;
+			for (size_t i = 0; i < n; ++i) _ptr[i] = val;
 		}
-		vector(int n, const T& val) : _size(n) {
+		vector(size_t n, const T& val) : _size(n) {
 			_maxSize = n < 50 ? 100 : n * 2;
 			_ptr = new T[_maxSize];
-			for (int i = 0; i < n; ++i) _ptr[i] = val;
+			for (size_t i = 0; i < n; ++i) _ptr[i] = val;
 		}
 		/**
 		 * @brief 复制构造函数
 		 */
 		vector(vector& vec) : _maxSize(vec.maxSize()), _size(vec.size()) {
 			_ptr = new T[_maxSize];
-			for (int i = 0; i < _size; ++i) _ptr[i] = vec[i];
+			for (size_t i = 0; i < _size; ++i) _ptr[i] = vec[i];
 		}
 		~vector() { delete[] _ptr; }
 
@@ -66,18 +64,18 @@ namespace ms {
 		 * @param n 长度
 		 * @param val 覆盖的值
 		 */
-		void assign(int n, T&& val) {
+		void assign(size_t n, T&& val) {
 			if (n >= _maxSize) {  // 先扩容
 				_maxSize = n * 2;
 				T* np = new T[_maxSize];
 				delete[] _ptr;
 				_ptr = np;
 			}
-			for (int i = 0; i < n; ++i) _ptr[i] = val;
+			for (size_t i = 0; i < n; ++i) _ptr[i] = val;
 			_size = n;
 		}
 
-		T& operator[](int index) {
+		T& operator[](size_t index) {
 			if (index >= _size) {
 				std::cerr << "Out of size while reading." << std::endl;
 				exit(1);
@@ -92,7 +90,7 @@ namespace ms {
 				_ptr = new T[_maxSize];
 			}
 			_size = vec.size();
-			for (int i = 0; i < _size; ++i) _ptr[i] = vec[i];
+			for (size_t i = 0; i < _size; ++i) _ptr[i] = vec[i];
 			return *this;
 		}
 
@@ -117,13 +115,13 @@ namespace ms {
 		 * @param index 元素val的最终下标
 		 * @param val 待插入的元素
 		 */
-		void insert(int index, T&& val) {
+		void insert(size_t index, T&& val) {
 			if (index > _size) {
 				std::cerr << "Out of size while inserting." << std::endl;
 				exit(1);
 			}
 			if (_maxSize == _size) _extend();
-			for (int i = _size; i > index; --i) _ptr[i] = _ptr[i - 1];
+			for (size_t i = _size; i > index; --i) _ptr[i] = _ptr[i - 1];
 			_ptr[index] = val;
 			++_size;
 		}
@@ -131,20 +129,20 @@ namespace ms {
 		/**
 		 * @brief 删除下标为index的元素
 		 */
-		void erase(int index) {
+		void erase(size_t index) {
 			if (index >= _size) {
 				std::cerr << "Out of size while erasing." << std::endl;
 				exit(1);
 			}
-			for (int i = index; i < _size - 1; ++i) {
+			for (size_t i = index; i < _size - 1; ++i) {
 				_ptr[i] = _ptr[i + 1];
 			}
 			--_size;
 		}
 
-		int size() { return _size; }
+		size_t size() { return _size; }
 
-		int maxSize() { return _maxSize; }
+		size_t maxSize() { return _maxSize; }
 
 		T* get_ptr() { return _ptr; }
 

@@ -43,7 +43,7 @@ namespace ms {
 		T val;
 		DLNode* prev, * next;
 
-		DLNode() : prev(nullptr), next(nullptr) {}
+		DLNode() : val(T()), prev(nullptr), next(nullptr) {}
 		DLNode(T t) : val(t), prev(nullptr), next(nullptr) {}
 		DLNode(T t, DLNode* p) : val(t), prev(nullptr), next(p) {}
 		DLNode(T t, DLNode* p1, DLNode* p2) : val(t), prev(p1), next(p2) {}

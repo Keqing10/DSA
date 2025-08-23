@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <iostream>
-
 #include "queue.hpp"
 #include "stack.hpp"
 

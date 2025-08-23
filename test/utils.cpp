@@ -1,6 +1,6 @@
 ﻿#include "utils.h"
 
-#include <cstdio>
+#include <iostream>
 
 void TestPrint(const char* p) {
 	printf("\n\033[0m\033[1;34m%s\033[0m %s\n", "[TEST]", p);  // blue
