@@ -1,9 +1,14 @@
-﻿#pragma once 
+﻿/*********************************************************************
+ * \file   heap.hpp
+ * \brief  提供堆相关算法，用于实现堆排序、优先级队列
+ *
+ * \author Mars
+ * \date   August 2025
+ *********************************************************************/
+#pragma once 
 
 namespace ms {
     /**
-     * @brief 提供堆相关算法。
-     * 实现：堆排序，优先级队列。
      * 堆为给定T类型数组，默认为大根堆。建立小根堆可以创建新类，重载“<”实现。
      * n个元素下标范围为[0, n-1]
      * i的孩子节点：2*i+1，2*i+2
@@ -43,6 +48,11 @@ namespace ms {
         heap(T* p, size_t n) : ptr(p), len(n) {}
         ~heap() {}
 
+        void set(T* p, size_t l) {
+            ptr = p;
+            len = l;
+        }
+
         /**
          * @brief 给定初始数组，建堆
          * @param p 数组起始地址
@@ -57,7 +67,7 @@ namespace ms {
         /**
          * @brief 弹出堆顶元素，同时保存到原堆末尾，堆的大小-1.
          */
-        T& pop() {
+        T pop() {
             swap(0, --len);
             adjust(0);
             return ptr[len];

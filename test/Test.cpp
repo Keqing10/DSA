@@ -15,7 +15,7 @@
 void ms::run()
 {
     test_vector();
-    //test_list();
+    test_list();
     //test_stack();
     //test_queue();
     //test_string();
@@ -34,7 +34,7 @@ void ms::test_vector()
     for (int i = 0; i < 10; ++i) {
         std::cout << "v2[" << i << "] = " << v2[i] << std::endl;
     }
-    ms::vector<stu> v3(5, stu(0, true, "test"));
+    ms::vector<Stu> v3(5, Stu(0, true, "test"));
     std::cout << "v3:\n";
     for (int i = 0; i < 5; ++i) {
         std::cout << "v3[" << i << "] : ";
@@ -49,7 +49,7 @@ void ms::test_vector()
     }
 
     TestPrint("operator=");
-    ms::vector<stu> v4 = v3;
+    ms::vector<Stu> v4 = v3;
     std::cout << "v4:\n";
     for (int i = 0; i < 5; ++i) {
         std::cout << "v4[" << i << "] : ";
@@ -58,12 +58,12 @@ void ms::test_vector()
 
     TestPrint("push_back(), pop_back(), insert(), erase()");
     v4.clear();
-    v4.push_back(stu(1, true, "alpha"));
-    v4.push_back(stu(3, false, "gamma"));
-    v4.insert(1, stu(2, true, "beta"));
-    v4.push_back(stu(4, false, "delta"));
+    v4.push_back(Stu(1, true, "alpha"));
+    v4.push_back(Stu(3, false, "gamma"));
+    v4.insert(1, Stu(2, true, "beta"));
+    v4.push_back(Stu(4, false, "delta"));
     std::cout << "size:" << v4.size() << "\n";
-    v4.insert(3, stu());
+    v4.insert(3, Stu());
     v4.erase(3);
     std::cout << "v4:\n";
     for (int i = 0; i < v4.size(); ++i) {
@@ -72,7 +72,7 @@ void ms::test_vector()
     }
 
     TestPrint("get_ptr()");
-    stu* p = v4.get_ptr();
+    Stu* p = v4.get_ptr();
     p->print();
 }
 

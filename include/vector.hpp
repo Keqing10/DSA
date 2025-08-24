@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/*********************************************************************
+ * \file   vector.hpp
+ * \brief  动态数组的实现
+ *
+ * \author Mars
+ * \date   August 2025
+ *********************************************************************/
 
 #include <iostream>
 
@@ -8,14 +14,6 @@ namespace ms {
     private:
         size_t _maxSize, _size;  // 最大长度与当前长度
         T* _ptr;
-        // 扩容
-        void _extend() {
-            _maxSize *= 2;
-            T* np = new T[_maxSize];
-            for (size_t i = 0; i < _size; ++i) np[i] = _ptr[i];
-            delete[] _ptr;
-            _ptr = np;
-        }
 
     public:
         /**
@@ -39,10 +37,6 @@ namespace ms {
         vector(size_t n, T&& val) : _size(n) {
             _maxSize = n < 50 ? 100 : n * 2;
             _ptr = new T[_maxSize];
-            //if (n == 1) {
-            //	_ptr[0] = std::move(val);
-            //	return;
-            //}
             for (size_t i = 0; i < n; ++i) _ptr[i] = val;
         }
         vector(size_t n, const T& val) : _size(n) {
@@ -58,6 +52,17 @@ namespace ms {
             for (size_t i = 0; i < _size; ++i) _ptr[i] = vec.get(i);
         }
         ~vector() { delete[] _ptr; }
+
+        /**
+         * @brief 扩容
+         */
+        void extend() {
+            _maxSize *= 2;
+            T* np = new T[_maxSize];
+            for (size_t i = 0; i < _size; ++i) np[i] = _ptr[i];
+            delete[] _ptr;
+            _ptr = np;
+        }
 
         /**
          * @brief 重新声明数组长度和初始值
@@ -83,7 +88,7 @@ namespace ms {
             return _ptr[index];
         }
 
-        T get(size_t index) const {
+        const T& get(size_t index) const {
             if (index >= _size) {
                 std::cerr << "Out of size while get() reading." << std::endl;
                 exit(1);
@@ -102,12 +107,16 @@ namespace ms {
             return *this;
         }
 
+        inline bool empty() const { return _size == 0; }
+
+        inline bool full() const { return _size == _maxSize; }
+
         /**
          * @brief 在数组尾添加元素
          * @param val
          */
         void push_back(T&& val) {
-            if (_maxSize == _size) _extend();  // 插入前先扩容
+            if (_maxSize == _size) extend();  // 插入前先扩容
             _ptr[_size++] = val;
         }
 
@@ -118,17 +127,17 @@ namespace ms {
             return _ptr[--_size];
         }
 
-        T front() const {
-            if (_size == 0) {
-                std::cerr << "Blank while front." << std::endl;
+        T& front() {
+            if (empty()) {
+                std::cerr << "front() while vector is empty." << std::endl;
                 exit(1);
             }
             return _ptr[0];
         }
 
-        T& back() const {
-            if (_size == 0) {
-                std::cerr << "Blank while back." << std::endl;
+        T& back() {
+            if (empty()) {
+                std::cerr << "back() while vector is empty." << std::endl;
                 exit(1);
             }
             return _ptr[_size - 1];
@@ -141,10 +150,10 @@ namespace ms {
          */
         void insert(size_t index, T&& val) {
             if (index > _size) {
-                std::cerr << "Out of size while inserting." << std::endl;
+                std::cerr << "Out of size while insert()." << std::endl;
                 exit(1);
             }
-            if (_maxSize == _size) _extend();
+            if (_maxSize == _size) extend();
             for (size_t i = _size; i > index; --i) _ptr[i] = _ptr[i - 1];
             _ptr[index] = val;
             ++_size;

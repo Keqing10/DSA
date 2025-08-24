@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/*********************************************************************
+ * \file   stack.hpp
+ * \brief  栈的实现
+ *
+ * \author Mars
+ * \date   August 2025
+ *********************************************************************/
 
 #include <iostream>
 
@@ -17,24 +23,24 @@ namespace ms {
          */
         stack(size_t n) : _vec(n > 10 ? n : 10) {}
 
-        inline size_t size() {
+        inline size_t size() const {
             return _vec.size();
         }
 
-        inline size_t maxSize() {
+        inline size_t maxSize() const {
             return _vec.maxSize();
         }
 
-        inline bool empty() {
-            return _vec.size() == 0;
+        inline bool empty() const {
+            return _vec.empty();
         }
 
         void push(T&& elem) {
             _vec.push_back(elem);
         }
 
-        T& pop() {
-            if (_vec.size() == 0) {
+        T pop() {
+            if (empty()) {
                 std::cerr << "pop() while stack is empty." << std::endl;
                 exit(1);
             }
@@ -42,7 +48,7 @@ namespace ms {
         }
 
         T& top() {
-            if (_vec.size() == 0) {
+            if (empty()) {
                 std::cerr << "top() while stack is empty." << std::endl;
                 exit(1);
             }

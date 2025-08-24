@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/*********************************************************************
+ * \file   queue.hpp
+ * \brief  队列实现：双向队列，FIFO队列，优先级队列
+ *
+ * \author Mars
+ * \date   August 2025
+ *********************************************************************/
 
 #include <iostream>
 
@@ -62,9 +68,9 @@ namespace ms {
         /**
          * @brief 弹出队首元素
          */
-        T& pop_front() {
+        T pop_front() {
             if (_size == 0) {
-                std::cerr << "pop_front() while queue is empty." << std::endl;
+                std::cerr << "pop_front() while deque is empty." << std::endl;
                 exit(1);
             }
             --_size;
@@ -77,9 +83,9 @@ namespace ms {
          * @brief 弹出队尾元素
          * @return
          */
-        T& pop_back() {
+        T pop_back() {
             if (_size == 0) {
-                std::cerr << "pop_back() while queue is empty." << std::endl;
+                std::cerr << "pop_back() while deque is empty." << std::endl;
                 exit(1);
             }
             --_size;
@@ -89,7 +95,7 @@ namespace ms {
 
         T& front() {
             if (_size == 0) {
-                std::cerr << "front() while queue is empty." << std::endl;
+                std::cerr << "front() while deque is empty." << std::endl;
                 exit(1);
             }
             return _ptr[_head];
@@ -97,7 +103,7 @@ namespace ms {
 
         T& back() {
             if (_size == 0) {
-                std::cerr << "back() while queue is empty." << std::endl;
+                std::cerr << "back() while deque is empty." << std::endl;
                 exit(1);
             }
             // _tail > 0 => _tail - 1
@@ -133,7 +139,7 @@ namespace ms {
         /**
          * @brief 弹出队首元素
          */
-        T& pop() {
+        T pop() {
             if (_dq.empty()) {
                 std::cerr << "pop() while queue is empty." << std::endl;
                 exit(1);
@@ -173,20 +179,19 @@ namespace ms {
             delete[] _ptr;
             _ptr = np;
             _maxSize *= 2;
+            hp.set(_size, _ptr);
         }
     public:
         priority_queue() : _size(0), _maxSize(20) {
             _ptr = new T[_maxSize];
-            hp.len = 0;
-            hp.ptr = _ptr;
+            hp.set(0, _ptr);
         }
         /**
          * @brief 指定初始容量，最小为10
          */
         priority_queue(size_t n) : _size(0), _maxSize(n > 10 ? n : 10) {
             _ptr = new T[_maxSize];
-            hp.len = 0;
-            hp.ptr = _ptr;
+            hp.set(0, _ptr);
         }
         ~priority_queue() { delete[] _ptr; }
 
@@ -204,7 +209,7 @@ namespace ms {
             ++_size;
         }
 
-        T& pop() {
+        T pop() {
             --_size;
             return hp.pop();
         }
