@@ -5,6 +5,7 @@
  * \author Mars
  * \date   August 2025
  *********************************************************************/
+#pragma once
 
 #include "queue.hpp"
 #include "stack.hpp"
