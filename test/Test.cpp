@@ -12,19 +12,17 @@
 #include "utils.h"
 #include "vector.hpp"
 
-void ms::run()
-{
+void ms::run() {
     test_vector();
     test_list();
-    //test_stack();
-    //test_queue();
-    //test_string();
-    //test_tree();
-    //test_sort();
+    // test_stack();
+    // test_queue();
+    // test_string();
+    // test_tree();
+    // test_sort();
 }
 
-void ms::test_vector()
-{
+void ms::test_vector() {
     TestPrint("构造函数");
     ms::vector<int> v0;
     std::cout << "v0: size = " << v0.size() << ", maxSize = " << v0.maxSize() << std::endl;
@@ -45,7 +43,8 @@ void ms::test_vector()
     v2.assign(100, 3);
     std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.maxSize() << std::endl;
     for (int i = 0; i < 100; ++i) {
-        if (v2[i] != 3) std::cout << "There is an elem != 3 after assign()!\n";
+        if (v2[i] != 3)
+            std::cout << "There is an elem != 3 after assign()!\n";
     }
 
     TestPrint("operator=");
@@ -72,32 +71,31 @@ void ms::test_vector()
     }
 
     TestPrint("get_ptr()");
-    Stu* p = v4.get_ptr();
+    Stu *p = v4.get_ptr();
     p->print();
 }
 
-void ms::test_list()
-{
+void ms::test_list() {
     TestPrint("LNode ~ reverse()");
-    ms::LNode<int> a(1), * p = &a;
+    ms::LNode<int> a(1), *p = &a;
     for (int i = 2; i < 11; ++i) {
         p->next = new LNode<int>(i);
         p = p->next;
     }
-    ms::LNode<int>* h = ms::reverse(&a);
+    ms::LNode<int> *h = ms::reverse(&a);
     while (h) {
         std::cout << "=>" << h->val;
         h = h->next;
     }
 
     TestPrint("DLNode ~ reverse()");
-    ms::DLNode<int> b(1), * q = &b;
+    ms::DLNode<int> b(1), *q = &b;
     for (int i = 2; i < 11; ++i) {
         q->next = new DLNode<int>(i);
         q->next->prev = q;
         q = q->next;
     }
-    ms::DLNode<int>* head = ms::reverse(&b), * tail = nullptr;
+    ms::DLNode<int> *head = ms::reverse(&b), *tail = nullptr;
     while (head) {
         std::cout << " => " << head->val;
         tail = head;
@@ -110,23 +108,12 @@ void ms::test_list()
     }
 }
 
-void ms::test_stack()
-{
-}
+void ms::test_stack() {}
 
-void ms::test_queue()
-{
-}
+void ms::test_queue() {}
 
-void ms::test_string()
-{
-}
+void ms::test_string() {}
 
-void ms::test_tree()
-{
-}
+void ms::test_tree() {}
 
-void ms::test_sort()
-{
-}
-
+void ms::test_sort() {}
