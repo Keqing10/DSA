@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include <string>
 
-void TestPrint(const char *p);
+void TestPrint(const std::string &);
 
 namespace ms {
 class Student {

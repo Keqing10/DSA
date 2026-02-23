@@ -1,9 +1,36 @@
-﻿#include "utils.h"
+#include "utils.h"
 
 #include <iostream>
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
-void TestPrint(const char *p) {
-    printf("\n\033[0m\033[1;34m%s\033[0m %s\n", "[TEST]", p); // blue
+// Enable ANSI escape sequence processing on Windows consoles (once).
+static void enable_ansi_colors_on_windows() {
+#ifdef _WIN32
+    static bool enabled = []() {
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+        if (hOut == INVALID_HANDLE_VALUE)
+            return false;
+        DWORD dwMode = 0;
+        if (!GetConsoleMode(hOut, &dwMode))
+            return false;
+        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        if (!SetConsoleMode(hOut, dwMode))
+            return false;
+        return true;
+    }();
+    (void)enabled;
+#endif
+}
+
+void TestPrint(const std::string &s) {
+    enable_ansi_colors_on_windows();
+    // Print a blank line, then a blue [TEST] tag (bright blue) and reset color.
+    const char *blue = "\x1b[1;34m"; // bright blue
+    const char *reset = "\x1b[0m";
+    std::cout << std::endl << blue << "[TEST]" << reset << " " << s << std::endl;
 }
 
 void ms::Student::set(int _id, bool _male, std::string _name) {

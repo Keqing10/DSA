@@ -1,4 +1,4 @@
-﻿/*********************************************************************
+/*********************************************************************
  * \file   heap.hpp
  * \brief  提供堆相关算法，用于实现堆排序、优先级队列
  *
@@ -6,6 +6,9 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
+
+#include <stdexcept>
+#include <utility>
 
 namespace ms {
 /**
@@ -20,9 +23,9 @@ template <typename T> class heap {
      * @brief 交换下标为x和y的两个元素，保证：x, y < len
      */
     void swap(size_t x, size_t y) {
-        T temp = ptr[x];
-        ptr[x] = ptr[y];
-        ptr[y] = temp;
+        T temp = std::move(ptr[x]);
+        ptr[x] = std::move(ptr[y]);
+        ptr[y] = std::move(temp);
     }
 
     /**
@@ -61,8 +64,12 @@ template <typename T> class heap {
      * @param len 堆的长度，元素范围为[0, len-1]
      */
     void create() {
-        for (size_t i = (len - 2) / 2; i > -1; --i) {
+        if (len < 2)
+            return;
+        for (size_t i = (len - 2) / 2;; --i) {
             adjust(i);
+            if (i == 0)
+                break;
         }
     }
 
@@ -70,6 +77,13 @@ template <typename T> class heap {
      * @brief 弹出堆顶元素，同时保存到原堆末尾，堆的大小-1.
      */
     T pop() {
+        if (len == 0) {
+            throw std::out_of_range("pop() on empty heap");
+        }
+        if (len == 1) {
+            --len;
+            return ptr[0];
+        }
         swap(0, --len);
         adjust(0);
         return ptr[len];
@@ -77,14 +91,33 @@ template <typename T> class heap {
 
     /**
      * @brief 在堆尾插入元素t，再调整堆。堆的容量由被调用者维护，保证能成功插入。
-     * @param len 原来堆的长度，插入后变为len+1
      * @param t 被插入元素
      */
-    void insert(T &t) {
-        ptr[len++] = t;
-        for (size_t i = (len - 2) / 2; i > -1; i = (i - 1) / 2) {
-            adjust(i);
+    void insert(const T &t) {
+        size_t i = len++;
+        while (i > 0) {
+            size_t p = (i - 1) / 2;
+            if (ptr[p] < t) {
+                ptr[i] = std::move(ptr[p]);
+                i = p;
+            } else {
+                break;
+            }
         }
+        ptr[i] = t;
+    }
+    void insert(T &&t) {
+        size_t i = len++;
+        while (i > 0) {
+            size_t p = (i - 1) / 2;
+            if (ptr[p] < t) {
+                ptr[i] = std::move(ptr[p]);
+                i = p;
+            } else {
+                break;
+            }
+        }
+        ptr[i] = std::move(t);
     }
 };
 } // namespace ms

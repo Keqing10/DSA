@@ -1,4 +1,4 @@
-﻿/*********************************************************************
+/*********************************************************************
  * \file   string.hpp
  * \brief  字符串类的实现
  *
@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <stdexcept>
+#include <utility>
 
 namespace ms {
 class string {
@@ -30,10 +32,10 @@ class string {
             return;
         _capacity = len + 1;
         char *np = new char[_capacity];
-        memset(np, 0, _capacity);
         for (size_t i = 0; i < _size; ++i) {
             np[i] = _ptr[i];
         }
+        np[_size] = '\0'; // 确保末尾有 '\0'
         delete[] _ptr;
         _ptr = np;
     }
@@ -46,14 +48,14 @@ class string {
      */
     string() : _size(0), _capacity(50) {
         _ptr = new char[_capacity];
-        memset(_ptr, 0, _capacity);
+        _ptr[0] = '\0';
     }
     /**
      * @param maxCapacity 提供容量的初始值，最小为20
      */
     string(size_t maxCapacity) : _size(0), _capacity(maxCapacity > 20 ? maxCapacity : 20) {
         _ptr = new char[_capacity];
-        memset(_ptr, 0, _capacity);
+        _ptr[0] = '\0';
     }
     /**
      * @param ps 字符数组首地址
@@ -62,9 +64,9 @@ class string {
     string(const char *ps, size_t len) : _size(len) {
         _capacity = len > 10 ? len * 2 : 20;
         _ptr = new char[_capacity];
-        memset(_ptr, 0, _capacity);
         for (size_t i = 0; i < len; ++i)
             _ptr[i] = ps[i];
+        _ptr[_size] = '\0';
     }
     /**
      * @param ps 通过常量字符串初始化，末尾有'\0'
@@ -78,11 +80,22 @@ class string {
     /**
      * @brief 复制构造函数
      */
-    string(string &s) : _size(s.size()), _capacity(s.capacity()) {
+    string(const string &s) : _size(s.size()), _capacity(s.capacity()) {
         _ptr = new char[_capacity];
         for (size_t i = 0; i < _size; ++i)
             _ptr[i] = s[i];
+        _ptr[_size] = '\0'; // 确保末尾有 '\0'
     }
+
+    /**
+     * @brief 移动构造函数
+     */
+    string(string &&s) noexcept : _size(s._size), _capacity(s._capacity), _ptr(s._ptr) {
+        s._size = 0;
+        s._capacity = 0;
+        s._ptr = nullptr;
+    }
+
     /**
      * @brief 析构函数
      */
@@ -102,9 +115,8 @@ class string {
      * @return 下标i处字符的引用
      */
     char &operator[](size_t i) {
-        if (i < 0 || i >= _size) {
-            std::cerr << "Out of size while reading.\n";
-            exit(1);
+        if (i >= _size) {
+            throw std::out_of_range("Out of size while reading.");
         }
         return _ptr[i];
     }
@@ -115,32 +127,50 @@ class string {
      * @return 下标i处的字符，非引用
      */
     char operator[](size_t i) const {
-        if (i < 0 || i >= _size) {
-            std::cerr << "Out of size while reading.\n";
-            exit(1);
+        if (i >= _size) {
+            throw std::out_of_range("Out of size while reading.");
         }
         return _ptr[i];
     }
 
     string &operator=(const string &s) {
+        if (this == &s)
+            return *this;
         _size = s.size();
-        _capacity = s.capacity();
-        delete[] _ptr;
-        _ptr = new char[_capacity];
-        memset(_ptr, 0, _capacity);
+        if (_capacity < s.capacity()) {
+            delete[] _ptr;
+            _capacity = s.capacity();
+            _ptr = new char[_capacity];
+        }
         for (size_t i = 0; i < _size; ++i)
             _ptr[i] = s[i];
+        _ptr[_size] = '\0'; // 确保末尾有 '\0'
+        return *this;
+    }
+
+    string &operator=(string &&s) noexcept {
+        if (this == &s)
+            return *this;
+        delete[] _ptr;
+        _size = s._size;
+        _capacity = s._capacity;
+        _ptr = s._ptr;
+        s._size = 0;
+        s._capacity = 0;
+        s._ptr = nullptr;
         return *this;
     }
 
     string &operator=(const char *ps) {
         _size = strlen(ps);
-        _capacity = _size > 10 ? _size * 2 : 20;
-        delete[] _ptr;
-        _ptr = new char[_capacity];
-        memset(_ptr, 0, _capacity);
+        if (_capacity < _size + 1) {
+            delete[] _ptr;
+            _capacity = _size > 10 ? _size * 2 : 20;
+            _ptr = new char[_capacity];
+        }
         for (size_t i = 0; i < _size; ++i)
             _ptr[i] = ps[i];
+        _ptr[_size] = '\0'; // 确保末尾有 '\0'
         return *this;
     }
 
@@ -160,24 +190,20 @@ class string {
     /**
      * @brief 根据字典序比较两个字符串
      */
-    bool operator<(const string &s) const {
+    auto operator<=>(const string &s) const {
         size_t len = s.size() < _size ? s.size() : _size; // 较短字符串的长度
         for (size_t i = 0; i < len; ++i) {                // _ptr[i] == s[i]时持续循环
             if (_ptr[i] < s[i])
-                return true;
+                return std::strong_ordering::less;
             else if (_ptr[i] > s[i])
-                return false;
+                return std::strong_ordering::greater;
         }
         if (len == _size && len < s.size())
-            return true;
-        return false;
+            return std::strong_ordering::less;
+        else if (len == s.size() && len < _size)
+            return std::strong_ordering::greater;
+        return std::strong_ordering::equal;
     }
-
-    bool operator<=(const string &s) const { return *this == s || *this < s; }
-
-    bool operator>(const string &s) const { return !(*this == s || *this < s); }
-
-    bool operator>=(const string &s) const { return !(*this < s); }
 
     string operator+(const string &s) const {
         string ans(_capacity + s.capacity()); // 根据容量之和构造新的string对象
@@ -192,9 +218,8 @@ class string {
     }
 
     char at(size_t i) const {
-        if (i < 0 || i >= _size) {
-            std::cerr << "Out of size while at().\n";
-            exit(1);
+        if (i >= _size) {
+            throw std::out_of_range("Out of size while at().");
         }
         return _ptr[i];
     }
@@ -210,6 +235,7 @@ class string {
             _ptr[i + _size] = s[i];
         }
         _size += s.size();
+        _ptr[_size] = '\0';
         return *this;
     }
 
@@ -220,6 +246,7 @@ class string {
         if (full())
             _extend();
         _ptr[_size++] = c;
+        _ptr[_size] = '\0';
         return *this;
     }
 
@@ -247,6 +274,8 @@ class string {
         for (size_t i = _size; i > pos; --i)
             _ptr[i] = _ptr[i - 1];
         _ptr[pos] = c;
+        ++_size;
+        _ptr[_size] = '\0';
         return *this;
     }
     /**
@@ -258,10 +287,12 @@ class string {
         size_t len = strlen(ps);
         if (_size + len + 1 > _capacity)
             _extend(_size + len);
-        for (size_t i = _size; i >= pos; --i)
+        for (size_t i = _size; i >= pos && i != (size_t)-1; --i)
             _ptr[i + len] = _ptr[i]; // 字符向右移动len
         for (size_t i = 0; i < len; ++i)
             _ptr[i + pos] = ps[i];
+        _size += len;
+        _ptr[_size] = '\0';
         return *this;
     }
 
@@ -272,14 +303,14 @@ class string {
      */
     string &erase(size_t pos, size_t length) {
         if (pos >= _size) {
-            std::cerr << "Out of size while erase().\n";
-            exit(1);
+            throw std::out_of_range("Out of size while erase().");
         }
         if (pos + length > _size)
             length = _size - pos;
         for (size_t i = pos; i < _size - length; ++i)
             _ptr[i] = _ptr[i + length];
-        memset(_ptr + _size - length, 0, length);
+        _size -= length;
+        _ptr[_size] = '\0';
         return *this;
     }
 
@@ -287,8 +318,8 @@ class string {
      * @brief 清空字符串，全赋值0，size归0，capacity不变。
      */
     void clear() {
-        memset(_ptr, 0, _size);
         _size = 0;
+        _ptr[0] = '\0';
     }
 
     /**
@@ -328,7 +359,7 @@ class string {
      * @brief 查找字符c，返回下标
      * @return 若查找成功返回下标；查找失败返回-1.
      */
-    size_t find(char c) {
+    size_t find(char c) const {
         for (size_t i = 0; i < _size; ++i) {
             if (_ptr[i] == c)
                 return i;
@@ -340,21 +371,22 @@ class string {
      * @brief 查找子串ps，返回起始字符下标
      * @return 若查找成功返回起始字符下标；查找失败返回-1.
      */
-    size_t find(const char *ps) {
+    size_t find(const char *ps) const {
         size_t len = strlen(ps);
-        size_t i, j;
-        for (i = 0, j = 0; j < len && i < _size + 1 - len; ++i) { // i + len <= _size
-            // i 为起始字符沿着_ptr移动的循环
-            for (j = 0; j < len; ++j) {
+        if (len == 0)
+            return 0;
+        if (len > _size)
+            return -1;
+        for (size_t i = 0; i <= _size - len; ++i) {
+            size_t j = 0;
+            for (; j < len; ++j) {
                 if (_ptr[i + j] != ps[j])
                     break;
             }
-            // 若查找成功，j == len
+            if (j == len)
+                return i;
         }
-        if (j == len)
-            return i;
-        else
-            return -1;
+        return -1;
     }
 
     /**
@@ -372,6 +404,16 @@ class string {
             insert(pos + lenmin, ps + lenmin);
         }
         return *this;
+    }
+
+    /**
+     * @brief 重载输出运算符
+     */
+    friend std::ostream &operator<<(std::ostream &os, const string &s) {
+        if (s._ptr) {
+            os << s._ptr;
+        }
+        return os;
     }
 };
 } // namespace ms

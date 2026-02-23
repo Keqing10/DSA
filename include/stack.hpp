@@ -1,4 +1,4 @@
-﻿/*********************************************************************
+/*********************************************************************
  * \file   stack.hpp
  * \brief  栈的实现
  *
@@ -8,6 +8,8 @@
 #pragma once
 
 #include <iostream>
+#include <stdexcept>
+#include <utility>
 
 #include "vector.hpp"
 
@@ -29,20 +31,27 @@ template <typename T> class stack {
 
     inline bool empty() const { return _vec.empty(); }
 
-    void push(T &&elem) { _vec.push_back(elem); }
+    void push(const T &elem) { _vec.push_back(elem); }
+
+    void push(T &&elem) { _vec.push_back(std::move(elem)); }
 
     T pop() {
         if (empty()) {
-            std::cerr << "pop() while stack is empty." << std::endl;
-            exit(1);
+            throw std::out_of_range("pop() while stack is empty.");
         }
         return _vec.pop_back();
     }
 
     T &top() {
         if (empty()) {
-            std::cerr << "top() while stack is empty." << std::endl;
-            exit(1);
+            throw std::out_of_range("top() while stack is empty.");
+        }
+        return _vec.back();
+    }
+
+    const T &top() const {
+        if (empty()) {
+            throw std::out_of_range("top() while stack is empty.");
         }
         return _vec.back();
     }

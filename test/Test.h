@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 
 namespace ms {
-void run();
+void run_test();
 
 void test_vector();
 void test_list();

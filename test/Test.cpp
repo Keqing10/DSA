@@ -1,29 +1,33 @@
-﻿#include "Test.h"
+#include "Test.h"
 
 #include <cstdio>
+#include <functional>
 #include <iostream>
+#include <string>
 
+#include "bitree.hpp"
 #include "list.hpp"
 #include "queue.hpp"
 #include "sort.hpp"
 #include "stack.hpp"
 #include "string.hpp"
-#include "tree.hpp"
 #include "utils.h"
 #include "vector.hpp"
 
-void ms::run() {
+void ms::run_test() {
     test_vector();
     test_list();
-    // test_stack();
-    // test_queue();
-    // test_string();
-    // test_tree();
-    // test_sort();
+    test_stack();
+    test_queue();
+    test_string();
+    test_tree();
+    test_sort();
 }
 
 void ms::test_vector() {
-    TestPrint("构造函数");
+    TestPrint(">> vector");
+    TestPrint("constructor");
+
     ms::vector<int> v0;
     std::cout << "v0: size = " << v0.size() << ", maxSize = " << v0.maxSize() << std::endl;
     ms::vector<int> v1(10, 2);
@@ -76,44 +80,186 @@ void ms::test_vector() {
 }
 
 void ms::test_list() {
-    TestPrint("LNode ~ reverse()");
-    ms::LNode<int> a(1), *p = &a;
-    for (int i = 2; i < 11; ++i) {
-        p->next = new LNode<int>(i);
-        p = p->next;
+    TestPrint(">> forward_list");
+    ms::forward_list<int> fl;
+    for (int i = 1; i <= 5; ++i) {
+        fl.push_front(i);
     }
-    ms::LNode<int> *h = ms::reverse(&a);
-    while (h) {
-        std::cout << "=>" << h->val;
-        h = h->next;
+    ms::LNode<int> *fl_head = fl.get_head();
+    while (fl_head) {
+        std::cout << fl_head->val << " ";
+        fl_head = fl_head->next;
     }
+    std::cout << "\n";
+    fl.reverse();
+    fl_head = fl.get_head();
+    while (fl_head) {
+        std::cout << fl_head->val << " ";
+        fl_head = fl_head->next;
+    }
+    std::cout << "\n";
 
-    TestPrint("DLNode ~ reverse()");
-    ms::DLNode<int> b(1), *q = &b;
-    for (int i = 2; i < 11; ++i) {
-        q->next = new DLNode<int>(i);
-        q->next->prev = q;
-        q = q->next;
+    TestPrint(">> list");
+    ms::list<int> l;
+    for (int i = 1; i <= 5; ++i) {
+        l.push_back(i);
     }
-    ms::DLNode<int> *head = ms::reverse(&b), *tail = nullptr;
-    while (head) {
-        std::cout << " => " << head->val;
-        tail = head;
-        head = head->next;
+    l.push_front(0);
+    ms::DLNode<int> *l_head = l.get_head();
+    while (l_head) {
+        std::cout << l_head->val << " ";
+        l_head = l_head->next;
     }
-    std::cout << std::endl;
-    while (tail) {
-        std::cout << " => " << tail->val;
-        tail = tail->prev;
+    std::cout << "\n";
+    l.pop_back();
+    l.pop_front();
+    l.reverse();
+    l_head = l.get_head();
+    while (l_head) {
+        std::cout << l_head->val << " ";
+        l_head = l_head->next;
     }
+    std::cout << "\n";
 }
 
-void ms::test_stack() {}
+void ms::test_stack() {
+    TestPrint(">> stack");
+    ms::stack<int> st;
+    for (int i = 1; i <= 5; ++i) {
+        st.push(i);
+    }
+    std::cout << "stack pop: ";
+    while (!st.empty()) {
+        std::cout << st.top() << " ";
+        st.pop();
+    }
+    std::cout << "\n";
+}
 
-void ms::test_queue() {}
+void ms::test_queue() {
+    TestPrint(">> deque");
+    ms::deque<int> dq;
+    dq.push_back(1);
+    dq.push_front(2);
+    dq.push_back(3); // 2 1 3
+    std::cout << "deque pop_front: ";
+    while (!dq.empty()) {
+        std::cout << dq.pop_front() << " ";
+    }
+    std::cout << "\n";
 
-void ms::test_string() {}
+    TestPrint(">> queue");
+    ms::queue<int> q;
+    for (int i = 1; i <= 5; ++i) {
+        q.push(i);
+    }
+    std::cout << "queue pop: ";
+    while (!q.empty()) {
+        std::cout << q.front() << " ";
+        q.pop();
+    }
+    std::cout << "\n";
 
-void ms::test_tree() {}
+    TestPrint(">> priority_queue");
+    ms::priority_queue<int> pq;
+    pq.push(3);
+    pq.push(5);
+    pq.push(1);
+    pq.push(4);
+    pq.push(2);
+    std::cout << "priority_queue pop: ";
+    while (!pq.empty()) {
+        std::cout << pq.pop() << " "; // 默认大根堆，输出应为 5 4 3 2 1
+    }
+    std::cout << "\n";
+}
 
-void ms::test_sort() {}
+void ms::test_string() {
+    TestPrint(">> string");
+    ms::string s1("hello");
+    ms::string s2(" world");
+    s1.append(s2);
+    std::cout << "s1 append s2: " << s1 << "\n";
+
+    s1.insert(5, ",");
+    std::cout << "s1 insert ',': " << s1 << "\n";
+
+    s1.erase(5, 1);
+    std::cout << "s1 erase ',': " << s1 << "\n";
+
+    int pos = s1.find("world");
+    std::cout << "find 'world' at: " << pos << "\n";
+
+    ms::string s3 = std::move(s1);
+    std::cout << "s3 move from s1: " << s3 << "\n";
+    std::cout << "s1 after move: " << (s1.c_str() ? s1 : ms::string("null")) << "\n";
+}
+
+void ms::test_tree() {
+    TestPrint(">> BiTree");
+    // Construct a simple binary tree:
+    //       1
+    //      / \
+    //     2   3
+    //    / \   \
+    //   4   5   6
+    ms::BiTNode<int> *n4 = new ms::BiTNode<int>(4);
+    ms::BiTNode<int> *n5 = new ms::BiTNode<int>(5);
+    ms::BiTNode<int> *n6 = new ms::BiTNode<int>(6);
+    ms::BiTNode<int> *n2 = new ms::BiTNode<int>(2, n4, n5);
+    ms::BiTNode<int> *n3 = new ms::BiTNode<int>(3, nullptr, n6);
+    ms::BiTNode<int> *root = new ms::BiTNode<int>(1, n2, n3);
+
+    ms::BiTree<int> tree(root);
+
+    auto print_node = [](ms::BiTNode<int> *node) { std::cout << node->val << " "; };
+
+    std::cout << "preOrderRecursive: ";
+    tree.preOrderRecursive(print_node);
+    std::cout << "\n";
+
+    std::cout << "preOrderIterative: ";
+    tree.preOrderIterative(print_node);
+    std::cout << "\n";
+
+    std::cout << "inOrderRecursive: ";
+    tree.inOrderRecursive(print_node);
+    std::cout << "\n";
+
+    std::cout << "inOrderIterative: ";
+    tree.inOrderIterative(print_node);
+    std::cout << "\n";
+
+    std::cout << "postOrderRecursive: ";
+    tree.postOrderRecursive(print_node);
+    std::cout << "\n";
+
+    std::cout << "levelOrder: ";
+    tree.levelOrder(print_node);
+    std::cout << "\n";
+
+    // Clean up is handled by BiTree destructor
+}
+
+void ms::test_sort() {
+    TestPrint(">> sort");
+    ms::vector<int> v{5, 2, 9, 1, 5, 6, 8, 3, 7, 4};
+
+    auto test_algorithm = [&v](const char *name, std::function<void(int *, size_t)> sort_func) {
+        ms::vector<int> temp{v};
+        sort_func(temp.get_ptr(), temp.size());
+        std::cout << name << ": ";
+        for (size_t i = 0; i < temp.size(); ++i) {
+            std::cout << temp[i] << " ";
+        }
+        std::cout << "\n";
+    };
+
+    test_algorithm("bubbleSort", ms::sortBubble<int>);
+    test_algorithm("quickSort", ms::sortQuick<int>);
+    test_algorithm("insertSort", ms::sortInsert<int>);
+    test_algorithm("shellSort", ms::sortShell<int>);
+    test_algorithm("checkSort", ms::sortCheck<int>);
+    test_algorithm("heapSort", ms::sortHeap<int>);
+    test_algorithm("mergeSort", ms::sortMerge<int>);
+}
