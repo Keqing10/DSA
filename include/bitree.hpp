@@ -1,11 +1,14 @@
 /*********************************************************************
- * \file   tree.hpp
+ * \file   bitree.hpp
  * \brief  二叉树的实现及其遍历算法
  *
  * \author Mars
  * \date   August 2025
  *********************************************************************/
 #pragma once
+
+#ifndef BITREE_HPP
+#define BITREE_HPP
 
 #include "queue.hpp"
 #include "stack.hpp"
@@ -32,13 +35,13 @@ template <typename T> class BiTNode {
  * @brief 对二叉树结点进行操作的函数指针
  * @tparam T
  */
-template <typename T> using TOP = void (*)(BiTNode<T> *);
+template <typename T> using BiTOp = void (*)(BiTNode<T> *);
 
 /**
  * @brief 二叉树类
  */
 template <typename T> class BiTree {
-  private:
+  protected:
     BiTNode<T> *_root;
 
     void _destroy(BiTNode<T> *node) {
@@ -49,7 +52,7 @@ template <typename T> class BiTree {
         delete node;
     }
 
-    void _preOrderRecursive(BiTNode<T> *node, TOP<T> op) {
+    void _preOrderRecursive(BiTNode<T> *node, BiTOp<T> op) {
         if (!node)
             return;
         op(node);
@@ -57,7 +60,7 @@ template <typename T> class BiTree {
         _preOrderRecursive(node->right, op);
     }
 
-    void _inOrderRecursive(BiTNode<T> *node, TOP<T> op) {
+    void _inOrderRecursive(BiTNode<T> *node, BiTOp<T> op) {
         if (!node)
             return;
         _inOrderRecursive(node->left, op);
@@ -65,7 +68,7 @@ template <typename T> class BiTree {
         _inOrderRecursive(node->right, op);
     }
 
-    void _postOrderRecursive(BiTNode<T> *node, TOP<T> op) {
+    void _postOrderRecursive(BiTNode<T> *node, BiTOp<T> op) {
         if (!node)
             return;
         _postOrderRecursive(node->left, op);
@@ -76,7 +79,7 @@ template <typename T> class BiTree {
   public:
     BiTree() : _root(nullptr) {}
     BiTree(BiTNode<T> *root) : _root(root) {}
-    ~BiTree() { _destroy(_root); }
+    virtual ~BiTree() { _destroy(_root); }
 
     BiTNode<T> *getRoot() const { return _root; }
     void setRoot(BiTNode<T> *root) { _root = root; }
@@ -84,12 +87,12 @@ template <typename T> class BiTree {
     /**
      * @brief 先序遍历，递归形式
      */
-    void preOrderRecursive(TOP<T> op) { _preOrderRecursive(_root, op); }
+    void preOrderRecursive(BiTOp<T> op) { _preOrderRecursive(_root, op); }
 
     /**
      * @brief 先序遍历，迭代形式
      */
-    void preOrderIterative(TOP<T> op) {
+    void preOrderIterative(BiTOp<T> op) {
         if (!_root)
             return;
         stack<BiTNode<T> *> stk;
@@ -107,12 +110,12 @@ template <typename T> class BiTree {
     /**
      * @brief 中序遍历，递归形式
      */
-    void inOrderRecursive(TOP<T> op) { _inOrderRecursive(_root, op); }
+    void inOrderRecursive(BiTOp<T> op) { _inOrderRecursive(_root, op); }
 
     /**
      * @brief 中序遍历，迭代形式
      */
-    void inOrderIterative(TOP<T> op) {
+    void inOrderIterative(BiTOp<T> op) {
         if (!_root)
             return;
         stack<BiTNode<T> *> stk;
@@ -131,12 +134,12 @@ template <typename T> class BiTree {
     /**
      * @brief 后序遍历，递归形式
      */
-    void postOrderRecursive(TOP<T> op) { _postOrderRecursive(_root, op); }
+    void postOrderRecursive(BiTOp<T> op) { _postOrderRecursive(_root, op); }
 
     /**
      * @brief 层次遍历，迭代形式
      */
-    void levelOrder(TOP<T> op) {
+    void levelOrder(BiTOp<T> op) {
         if (!_root)
             return;
         queue<BiTNode<T> *> que;
@@ -152,3 +155,5 @@ template <typename T> class BiTree {
     }
 };
 } // namespace ms
+
+#endif // BITREE_HPP

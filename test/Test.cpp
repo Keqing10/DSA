@@ -6,6 +6,7 @@
 #include <string>
 
 #include "bitree.hpp"
+#include "bstree.hpp"
 #include "list.hpp"
 #include "queue.hpp"
 #include "sort.hpp"
@@ -20,7 +21,8 @@ void ms::run_test() {
     test_stack();
     test_queue();
     test_string();
-    test_tree();
+    test_bitree();
+    test_bstree();
     test_sort();
 }
 
@@ -195,7 +197,7 @@ void ms::test_string() {
     std::cout << "s1 after move: " << (s1.c_str() ? s1 : ms::string("null")) << "\n";
 }
 
-void ms::test_tree() {
+void ms::test_bitree() {
     TestPrint(">> BiTree");
     // Construct a simple binary tree:
     //       1
@@ -239,6 +241,46 @@ void ms::test_tree() {
     std::cout << "\n";
 
     // Clean up is handled by BiTree destructor
+}
+
+void ms::test_bstree() {
+    TestPrint(">> BSTree");
+    ms::BSTree<int> bst;
+
+    // 插入测试
+    int arr[] = {5, 3, 7, 2, 4, 6, 8};
+    for (int x : arr) {
+        bst.insert(x);
+    }
+
+    auto print_node = [](ms::BiTNode<int> *node) { std::cout << node->val << " "; };
+
+    std::cout << "inOrder (should be sorted): ";
+    bst.inOrderIterative(print_node);
+    std::cout << "\n";
+
+    // 最值测试
+    std::cout << "Min: " << bst.findMin() << ", Max: " << bst.findMax() << "\n";
+
+    // 查找测试
+    std::cout << "Search 4: " << (bst.search(4) ? "Found" : "Not Found") << "\n";
+    std::cout << "Search 9: " << (bst.search(9) ? "Found" : "Not Found") << "\n";
+
+    // 删除测试
+    std::cout << "Remove 2 (leaf):\n";
+    bst.remove(2);
+    bst.inOrderIterative(print_node);
+    std::cout << "\n";
+
+    std::cout << "Remove 3 (one child):\n";
+    bst.remove(3);
+    bst.inOrderIterative(print_node);
+    std::cout << "\n";
+
+    std::cout << "Remove 5 (two children, root):\n";
+    bst.remove(5);
+    bst.inOrderIterative(print_node);
+    std::cout << "\n";
 }
 
 void ms::test_sort() {

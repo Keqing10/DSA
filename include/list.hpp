@@ -8,6 +8,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef LIST_HPP
+#define LIST_HPP
+
 #include <iostream>
 #include <stdexcept>
 #include <utility>
@@ -325,3 +328,5 @@ template <typename T> class list {
 };
 
 } // namespace ms
+
+#endif // LIST_HPP

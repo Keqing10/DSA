@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef HEAP_HPP
+#define HEAP_HPP
+
 #include <stdexcept>
 #include <utility>
 
@@ -121,3 +124,5 @@ template <typename T> class heap {
     }
 };
 } // namespace ms
+
+#endif // HEAP_HPP

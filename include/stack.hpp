@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef STACK_HPP
+#define STACK_HPP
+
 #include <iostream>
 #include <stdexcept>
 #include <utility>
@@ -57,3 +60,5 @@ template <typename T> class stack {
     }
 };
 } // namespace ms
+
+#endif // STACK_HPP

@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
+
 #include <initializer_list>
 #include <iostream>
 #include <stdexcept>
@@ -227,3 +230,5 @@ template <typename T> class vector {
     void clear() { _size = 0; }
 };
 } // namespace ms
+
+#endif // VECTOR_HPP

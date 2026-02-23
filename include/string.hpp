@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef STRING_HPP
+#define STRING_HPP
+
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -417,3 +420,5 @@ class string {
     }
 };
 } // namespace ms
+
+#endif // STRING_HPP

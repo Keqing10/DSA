@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
+
 #include <iostream>
 #include <stdexcept>
 #include <utility>
@@ -263,3 +266,5 @@ template <typename T> class priority_queue {
     T &front() { return _ptr[0]; }
 };
 } // namespace ms
+
+#endif // QUEUE_HPP

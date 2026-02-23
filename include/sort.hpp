@@ -9,6 +9,9 @@
  *********************************************************************/
 #pragma once
 
+#ifndef SORT_HPP
+#define SORT_HPP
+
 #include <functional>
 #include <utility>
 
@@ -155,3 +158,5 @@ template <typename T> void sortMerge(T *p, size_t len) {
     delete[] pa;
 }
 } // namespace ms
+
+#endif // SORT_HPP
