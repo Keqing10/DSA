@@ -10,5 +10,6 @@ void test_queue();
 void test_string();
 void test_bitree();
 void test_bstree();
+void test_avltree();
 void test_sort();
 } // namespace ms

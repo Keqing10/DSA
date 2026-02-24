@@ -11,7 +11,6 @@
 #define TREE_HPP
 
 #include "queue.hpp"
-#include "tree.hpp"
 #include "vector.hpp"
 
 namespace ms {
@@ -23,7 +22,7 @@ template <typename T> class TreeNode {
     TreeNode() {}
     TreeNode(const T &t) : val(t) {}
     TreeNode(T &&t) : val(std::move(t)) {}
-    ~TreeNode() {}
+    ~TreeNode() = default;
 };
 
 template <typename T> using TreeOp = void (*)(TreeNode<T> *);

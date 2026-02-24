@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 
+#include "avltree.hpp"
 #include "bitree.hpp"
 #include "bstree.hpp"
 #include "list.hpp"
@@ -23,6 +24,7 @@ void ms::run_test() {
     test_string();
     test_bitree();
     test_bstree();
+    test_avltree();
     test_sort();
 }
 
@@ -280,6 +282,31 @@ void ms::test_bstree() {
     std::cout << "Remove 5 (two children, root):\n";
     bst.remove(5);
     bst.inOrderIterative(print_node);
+    std::cout << "\n";
+}
+
+void ms::test_avltree() {
+    TestPrint(">> AVLTree");
+    ms::AVLTree<int> avl;
+
+    // 导致多次旋转的插入操作
+    int arr[] = {10, 20, 30, 40, 50, 25};
+    for (int x : arr) {
+        avl.insert(x);
+    }
+
+    auto print_node = [](ms::BiTNode<int> *node) { std::cout << node->val << " "; };
+
+    std::cout << "inOrder (should be sorted): ";
+    avl.inOrderIterative(print_node);
+    std::cout << "\n";
+
+    std::cout << "Search 25: " << (avl.search(25) ? "Found" : "Not Found") << "\n";
+
+    // 删除测试
+    std::cout << "Remove 30 (root in some case):\n";
+    avl.remove(30);
+    avl.inOrderIterative(print_node);
     std::cout << "\n";
 }
 

@@ -17,13 +17,12 @@
 namespace ms {
 
 template <typename T> class BSTree : public BiTree<T> {
-
   public:
     BSTree() : BiTree<T>() {}
     BSTree(BiTNode<T> *root) : BiTree<T>(root) {}
-    ~BSTree() {}
+    ~BSTree() = default;
 
-    BiTNode<T> *search(const T &v) const {
+    virtual BiTNode<T> *search(const T &v) const {
         if (!this->_root)
             return nullptr;
         for (BiTNode<T> *p = this->_root; p;) {
@@ -38,7 +37,7 @@ template <typename T> class BSTree : public BiTree<T> {
         return nullptr;
     }
 
-    const T &findMax() const {
+    virtual const T &findMax() const {
         if (!this->_root) {
             throw std::out_of_range("findMax() while BSTree is empty.");
         }
@@ -48,7 +47,7 @@ template <typename T> class BSTree : public BiTree<T> {
         return p->val;
     }
 
-    const T &findMin() const {
+    virtual const T &findMin() const {
         if (!this->_root) {
             throw std::out_of_range("findMin() while BSTree is empty.");
         }
@@ -58,7 +57,7 @@ template <typename T> class BSTree : public BiTree<T> {
         return p->val;
     }
 
-    void insert(BiTNode<T> *node) {
+    virtual void insert(BiTNode<T> *node) {
         if (!this->_root) {
             this->_root = node;
             return;
@@ -86,11 +85,11 @@ template <typename T> class BSTree : public BiTree<T> {
         }
     }
 
-    void insert(const T &v) { insert(new BiTNode<T>(v)); }
+    virtual void insert(const T &v) { insert(new BiTNode<T>(v)); }
 
-    void insert(T &&v) { insert(new BiTNode<T>(v)); }
+    virtual void insert(T &&v) { insert(new BiTNode<T>(v)); }
 
-    void remove(const T &v) {
+    virtual void remove(const T &v) {
         BiTNode<T> *p = this->_root;
         BiTNode<T> *parent = nullptr;
 

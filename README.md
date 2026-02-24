@@ -8,10 +8,10 @@
 * [x] `stack`
 * [x] `queue`
 * [x] `string`
-* [ ] `tree`
+* [x] `tree`
 * [x] `BiTree`
 * [x] `BSTree`
-* [ ] `AVLTree`
+* [x] `AVLTree`
 
 ## 算法
 
