@@ -33,10 +33,10 @@ void ms::test_vector() {
     TestPrint("constructor");
 
     ms::vector<int> v0;
-    std::cout << "v0: size = " << v0.size() << ", maxSize = " << v0.maxSize() << std::endl;
+    std::cout << "v0: size = " << v0.size() << ", maxSize = " << v0.capacity() << std::endl;
     ms::vector<int> v1(10, 2);
     ms::vector<int> v2(v1);
-    std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.maxSize() << std::endl;
+    std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.capacity() << std::endl;
     for (int i = 0; i < 10; ++i) {
         std::cout << "v2[" << i << "] = " << v2[i] << std::endl;
     }
@@ -49,7 +49,7 @@ void ms::test_vector() {
 
     TestPrint("assign()");
     v2.assign(100, 3);
-    std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.maxSize() << std::endl;
+    std::cout << "v2: size = " << v2.size() << ", maxSize = " << v2.capacity() << std::endl;
     for (int i = 0; i < 100; ++i) {
         if (v2[i] != 3)
             std::cout << "There is an elem != 3 after assign()!\n";
@@ -255,11 +255,11 @@ void ms::test_bstree() {
         bst.insert(x);
     }
 
-    auto print_node = [](ms::BiTNode<int> *node) { std::cout << node->val << " "; };
-
-    std::cout << "inOrder (should be sorted): ";
-    bst.inOrderIterative(print_node);
+    std::cout << "inOrder after insert: ";
+    ms::print_inorder(bst.getRoot());
     std::cout << "\n";
+
+    std::cout << "Root after insert: " << (bst.getRoot() ? bst.getRoot()->val : -1) << "\n";
 
     // 最值测试
     std::cout << "Min: " << bst.findMin() << ", Max: " << bst.findMax() << "\n";
@@ -271,17 +271,17 @@ void ms::test_bstree() {
     // 删除测试
     std::cout << "Remove 2 (leaf):\n";
     bst.remove(2);
-    bst.inOrderIterative(print_node);
-    std::cout << "\n";
+    std::cout << "Search 2: " << (bst.search(2) ? "Found" : "Not Found") << "\n";
 
     std::cout << "Remove 3 (one child):\n";
     bst.remove(3);
-    bst.inOrderIterative(print_node);
-    std::cout << "\n";
+    std::cout << "Search 3: " << (bst.search(3) ? "Found" : "Not Found") << "\n";
 
     std::cout << "Remove 5 (two children, root):\n";
     bst.remove(5);
-    bst.inOrderIterative(print_node);
+    std::cout << "Search 5: " << (bst.search(5) ? "Found" : "Not Found") << "\n";
+    std::cout << "inOrder after remove: ";
+    ms::print_inorder(bst.getRoot());
     std::cout << "\n";
 }
 
@@ -295,18 +295,20 @@ void ms::test_avltree() {
         avl.insert(x);
     }
 
-    auto print_node = [](ms::BiTNode<int> *node) { std::cout << node->val << " "; };
-
-    std::cout << "inOrder (should be sorted): ";
-    avl.inOrderIterative(print_node);
+    std::cout << "inOrder after insert: ";
+    ms::print_inorder(avl.getRoot());
     std::cout << "\n";
+
+    std::cout << "Root after insert: " << (avl.getRoot() ? avl.getRoot()->val : -1) << "\n";
 
     std::cout << "Search 25: " << (avl.search(25) ? "Found" : "Not Found") << "\n";
 
     // 删除测试
     std::cout << "Remove 30 (root in some case):\n";
     avl.remove(30);
-    avl.inOrderIterative(print_node);
+    std::cout << "Search 30: " << (avl.search(30) ? "Found" : "Not Found") << "\n";
+    std::cout << "inOrder after remove: ";
+    ms::print_inorder(avl.getRoot());
     std::cout << "\n";
 }
 

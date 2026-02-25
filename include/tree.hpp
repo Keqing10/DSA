@@ -6,18 +6,18 @@
  * \date   February 2026
  *********************************************************************/
 #pragma once
-
 #ifndef TREE_HPP
 #define TREE_HPP
 
-#include "queue.hpp"
-#include "vector.hpp"
+#include <queue>
+#include <utility>
+#include <vector>
 
 namespace ms {
 template <typename T> class TreeNode {
   public:
     T val;
-    vector<TreeNode *> children;
+    std::vector<TreeNode *> children;
 
     TreeNode() {}
     TreeNode(const T &t) : val(t) {}
@@ -44,14 +44,14 @@ template <typename T> class Tree {
             return;
         op(node);
         for (TreeNode<T> *child : node->children)
-            _preOrder(child, op);
+            _preOrderRecursive(child, op);
     }
 
     void _postOrderRecursive(TreeNode<T> *node, TreeOp<T> op) {
         if (!node)
             return;
         for (TreeNode<T> *child : node->children)
-            _postOrder(child, op);
+            _postOrderRecursive(child, op);
         op(node);
     }
 
@@ -79,7 +79,7 @@ template <typename T> class Tree {
     void levelOrder(TreeOp<T> op) {
         if (!_root)
             return;
-        queue<TreeNode<T> *> q;
+        std::queue<TreeNode<T> *> q;
         q.push(_root);
         while (!q.empty()) {
             TreeNode<T> *node = q.front();

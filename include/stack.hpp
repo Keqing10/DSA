@@ -10,27 +10,25 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include <iostream>
 #include <stdexcept>
 #include <utility>
-
-#include "vector.hpp"
+#include <vector>
 
 namespace ms {
 template <typename T> class stack {
   private:
-    vector<T> _vec;
+    std::vector<T> _vec;
 
   public:
     stack() : _vec() {}
     /**
      * @param n 初始栈的最大容量。最小为10，n > 10时n有效
      */
-    stack(size_t n) : _vec(n > 10 ? n : 10) {}
+    stack(size_t n) : _vec() { _vec.reserve(n > 10 ? n : 10); }
 
     inline size_t size() const { return _vec.size(); }
 
-    inline size_t maxSize() const { return _vec.maxSize(); }
+    inline size_t maxSize() const { return _vec.capacity(); }
 
     inline bool empty() const { return _vec.empty(); }
 
@@ -42,7 +40,9 @@ template <typename T> class stack {
         if (empty()) {
             throw std::out_of_range("pop() while stack is empty.");
         }
-        return _vec.pop_back();
+        T val = std::move(_vec.back());
+        _vec.pop_back();
+        return val;
     }
 
     T &top() {

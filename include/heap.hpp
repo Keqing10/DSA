@@ -6,7 +6,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef HEAP_HPP
 #define HEAP_HPP
 

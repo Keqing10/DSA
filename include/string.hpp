@@ -6,7 +6,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef STRING_HPP
 #define STRING_HPP
 

@@ -1,10 +1,29 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 
 void TestPrint(const std::string &);
 
 namespace ms {
+/**
+ * @brief 中序遍历并输出节点值。
+ *
+ * 适用于拥有以下成员的二叉树节点类型：
+ * - left
+ * - right
+ * - val
+ *
+ * 当前项目可直接用于：BiTree 的 BiTNode、BSTree 的 BSTNode、AVLTree 的 AVLTNode。
+ */
+template <typename Node> void print_inorder(Node *node) {
+    if (!node)
+        return;
+    print_inorder(node->left);
+    std::cout << node->val << " ";
+    print_inorder(node->right);
+}
+
 class Student {
   public:
     int id; // 合法id为非负整数，-1表示未有效赋值

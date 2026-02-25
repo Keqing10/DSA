@@ -6,7 +6,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
@@ -15,7 +14,6 @@
 #include <utility>
 
 #include "heap.hpp"
-#include "vector.hpp"
 
 namespace ms {
 template <typename T> class deque {

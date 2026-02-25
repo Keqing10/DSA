@@ -8,7 +8,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef SORT_HPP
 #define SORT_HPP
 

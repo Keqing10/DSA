@@ -6,12 +6,12 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef BITREE_HPP
 #define BITREE_HPP
 
-#include "queue.hpp"
-#include "stack.hpp"
+#include <queue>
+#include <stack>
+#include <utility>
 
 namespace ms {
 /**
@@ -41,7 +41,7 @@ template <typename T> using BiTOp = void (*)(BiTNode<T> *);
  * @brief 二叉树类
  */
 template <typename T> class BiTree {
-  protected:
+  private:
     BiTNode<T> *_root;
 
     void _destroy(BiTNode<T> *node) {
@@ -95,10 +95,11 @@ template <typename T> class BiTree {
     void preOrderIterative(BiTOp<T> op) {
         if (!_root)
             return;
-        stack<BiTNode<T> *> stk;
+        std::stack<BiTNode<T> *> stk;
         stk.push(_root);
         while (!stk.empty()) {
-            BiTNode<T> *p = stk.pop();
+            BiTNode<T> *p = stk.top();
+            stk.pop();
             op(p);
             if (p->right)
                 stk.push(p->right);
@@ -118,14 +119,15 @@ template <typename T> class BiTree {
     void inOrderIterative(BiTOp<T> op) {
         if (!_root)
             return;
-        stack<BiTNode<T> *> stk;
+        std::stack<BiTNode<T> *> stk;
         BiTNode<T> *curr = _root;
         while (!stk.empty() || curr) {
             while (curr) {
                 stk.push(curr);
                 curr = curr->left;
             }
-            curr = stk.pop();
+            curr = stk.top();
+            stk.pop();
             op(curr);
             curr = curr->right;
         }
@@ -142,10 +144,11 @@ template <typename T> class BiTree {
     void levelOrder(BiTOp<T> op) {
         if (!_root)
             return;
-        queue<BiTNode<T> *> que;
+        std::queue<BiTNode<T> *> que;
         que.push(_root);
         while (!que.empty()) {
-            BiTNode<T> *curr = que.pop();
+            BiTNode<T> *curr = que.front();
+            que.pop();
             op(curr);
             if (curr->left)
                 que.push(curr->left);

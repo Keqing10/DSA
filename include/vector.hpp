@@ -6,7 +6,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
@@ -52,7 +51,7 @@ template <typename T> class vector {
     /**
      * @brief 复制构造函数
      */
-    vector(const vector &vec) : _maxSize(vec.maxSize()), _size(vec.size()) {
+    vector(const vector &vec) : _maxSize(vec.capacity()), _size(vec.size()) {
         _ptr = new T[_maxSize];
         for (size_t i = 0; i < _size; ++i)
             _ptr[i] = vec.get(i);
@@ -123,9 +122,9 @@ template <typename T> class vector {
 
     vector &operator=(const vector &vec) {
         if (this == &vec)
-            return *this;            // 防止自赋值
-        if (_maxSize < vec.size()) { // 扩容
-            _maxSize = vec.maxSize();
+            return *this;                // 防止自赋值
+        if (_maxSize < vec.capacity()) { // 扩容
+            _maxSize = vec.capacity();
             delete[] _ptr;
             _ptr = new T[_maxSize];
         }
@@ -223,7 +222,7 @@ template <typename T> class vector {
 
     inline size_t size() const { return _size; }
 
-    inline size_t maxSize() const { return _maxSize; }
+    inline size_t capacity() const { return _maxSize; }
 
     T *get_ptr() { return _ptr; }
 

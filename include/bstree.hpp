@@ -6,26 +6,50 @@
  * \date   February 2026
  *********************************************************************/
 #pragma once
-
 #ifndef BSTREE_HPP
 #define BSTREE_HPP
 
 #include <stdexcept>
-
-#include "bitree.hpp"
+#include <utility>
 
 namespace ms {
 
-template <typename T> class BSTree : public BiTree<T> {
+template <typename T> class BSTNode {
   public:
-    BSTree() : BiTree<T>() {}
-    BSTree(BiTNode<T> *root) : BiTree<T>(root) {}
-    ~BSTree() = default;
+    T val;
+    BSTNode *left, *right;
 
-    virtual BiTNode<T> *search(const T &v) const {
-        if (!this->_root)
-            return nullptr;
-        for (BiTNode<T> *p = this->_root; p;) {
+    BSTNode() : left(nullptr), right(nullptr) {}
+    BSTNode(const T &t) : val(t), left(nullptr), right(nullptr) {}
+    BSTNode(T &&t) : val(std::move(t)), left(nullptr), right(nullptr) {}
+    BSTNode(BSTNode *pl, BSTNode *pr) : left(pl), right(pr) {}
+    BSTNode(const T &t, BSTNode *pl, BSTNode *pr) : val(t), left(pl), right(pr) {}
+    BSTNode(T &&t, BSTNode *pl, BSTNode *pr) : val(std::move(t)), left(pl), right(pr) {}
+    ~BSTNode() {}
+};
+
+template <typename T> class BSTree {
+  private:
+    BSTNode<T> *_root;
+
+    void destroy(BSTNode<T> *node) {
+        if (!node)
+            return;
+        destroy(node->left);
+        destroy(node->right);
+        delete node;
+    }
+
+  public:
+    BSTree() : _root(nullptr) {}
+    explicit BSTree(BSTNode<T> *root) : _root(root) {}
+    ~BSTree() { destroy(_root); }
+
+    BSTNode<T> *getRoot() const { return _root; }
+    void setRoot(BSTNode<T> *root) { _root = root; }
+
+    BSTNode<T> *search(const T &v) const {
+        for (BSTNode<T> *p = _root; p;) {
             if (p->val == v) {
                 return p;
             } else if (p->val < v) {
@@ -37,35 +61,37 @@ template <typename T> class BSTree : public BiTree<T> {
         return nullptr;
     }
 
-    virtual const T &findMax() const {
-        if (!this->_root) {
+    const T &findMax() const {
+        if (!_root) {
             throw std::out_of_range("findMax() while BSTree is empty.");
         }
-        BiTNode<T> *p = this->_root;
+        BSTNode<T> *p = _root;
         while (p->right)
             p = p->right;
         return p->val;
     }
 
-    virtual const T &findMin() const {
-        if (!this->_root) {
+    const T &findMin() const {
+        if (!_root) {
             throw std::out_of_range("findMin() while BSTree is empty.");
         }
-        BiTNode<T> *p = this->_root;
+        BSTNode<T> *p = _root;
         while (p->left)
             p = p->left;
         return p->val;
     }
 
-    virtual void insert(BiTNode<T> *node) {
-        if (!this->_root) {
-            this->_root = node;
+    void insert(BSTNode<T> *node) {
+        if (!node)
+            return;
+        if (!_root) {
+            _root = node;
             return;
         }
-        for (auto p = this->_root; p;) {
+        for (BSTNode<T> *p = _root; p;) {
             if (p->val == node->val) {
-                delete node; // 避免内存泄漏
-                return;      // 不允许存在相同元素
+                delete node;
+                return;
             }
             if (p->val < node->val) {
                 if (p->right) {
@@ -85,13 +111,13 @@ template <typename T> class BSTree : public BiTree<T> {
         }
     }
 
-    virtual void insert(const T &v) { insert(new BiTNode<T>(v)); }
+    void insert(const T &v) { insert(new BSTNode<T>(v)); }
 
-    virtual void insert(T &&v) { insert(new BiTNode<T>(v)); }
+    void insert(T &&v) { insert(new BSTNode<T>(std::move(v))); }
 
-    virtual void remove(const T &v) {
-        BiTNode<T> *p = this->_root;
-        BiTNode<T> *parent = nullptr;
+    void remove(const T &v) {
+        BSTNode<T> *p = _root;
+        BSTNode<T> *parent = nullptr;
 
         while (p && p->val != v) {
             parent = p;
@@ -104,9 +130,8 @@ template <typename T> class BSTree : public BiTree<T> {
             return;
 
         if (p->left && p->right) {
-            // 找右子树的最小节点 (minP) 及其父节点 (minParent)
-            BiTNode<T> *minParent = p;
-            BiTNode<T> *minP = p->right;
+            BSTNode<T> *minParent = p;
+            BSTNode<T> *minP = p->right;
             while (minP->left) {
                 minParent = minP;
                 minP = minP->left;
@@ -119,15 +144,14 @@ template <typename T> class BSTree : public BiTree<T> {
         }
 
         // p 现在最多只有一个子节点
-        BiTNode<T> *child = nullptr;
+        BSTNode<T> *child = nullptr;
         if (p->left)
             child = p->left;
         else if (p->right)
             child = p->right;
 
-        // 执行删除并重新连接父节点
-        if (!parent) { // 如果 parent 为空，说明要删除的是根节点
-            this->_root = child;
+        if (!parent) {
+            _root = child;
         } else if (parent->left == p) {
             parent->left = child;
         } else {

@@ -7,7 +7,6 @@
  * \date   August 2025
  *********************************************************************/
 #pragma once
-
 #ifndef LIST_HPP
 #define LIST_HPP
 
