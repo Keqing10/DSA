@@ -22,6 +22,8 @@ template <typename T> class TreeNode {
     TreeNode() {}
     TreeNode(const T &t) : val(t) {}
     TreeNode(T &&t) : val(std::move(t)) {}
+    TreeNode(const T &t, const std::vector<TreeNode *> &children) : val(t), children(children) {}
+    TreeNode(T &&t, std::vector<TreeNode *> &&children) : val(std::move(t)), children(std::move(children)) {}
     ~TreeNode() = default;
 };
 

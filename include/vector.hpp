@@ -134,6 +134,22 @@ template <typename T> class vector {
         return *this;
     }
 
+    /**
+     * @brief 移动赋值运算符
+     */
+    vector &operator=(vector &&vec) noexcept {
+        if (this != &vec) {
+            delete[] _ptr;          // 释放当前资源
+            _ptr = vec._ptr;
+            _size = vec._size;
+            _maxSize = vec._maxSize;
+            vec._ptr = nullptr;
+            vec._size = 0;
+            vec._maxSize = 0;
+        }
+        return *this;
+    }
+
     inline bool empty() const { return _size == 0; }
 
     inline bool full() const { return _size == _maxSize; }

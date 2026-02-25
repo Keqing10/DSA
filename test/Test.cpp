@@ -10,9 +10,11 @@
 #include "bstree.hpp"
 #include "list.hpp"
 #include "queue.hpp"
+#include "rbtree.hpp"
 #include "sort.hpp"
 #include "stack.hpp"
 #include "string.hpp"
+#include "tree.hpp"
 #include "utils.h"
 #include "vector.hpp"
 
@@ -22,9 +24,11 @@ void ms::run_test() {
     test_stack();
     test_queue();
     test_string();
+    test_tree();
     test_bitree();
     test_bstree();
     test_avltree();
+    test_rbtree();
     test_sort();
 }
 
@@ -199,6 +203,47 @@ void ms::test_string() {
     std::cout << "s1 after move: " << (s1.c_str() ? s1 : ms::string("null")) << "\n";
 }
 
+void ms::test_tree() {
+    TestPrint(">> Tree");
+    // 构造一个多叉树：
+    //        1
+    //      / | \
+    //     2  3  4
+    //    / \
+    //   5   6
+
+    // 使用新的构造函数创建节点
+    ms::TreeNode<int> *n5 = new ms::TreeNode<int>(5);
+    ms::TreeNode<int> *n6 = new ms::TreeNode<int>(6);
+
+    // 创建n2的子节点向量
+    std::vector<ms::TreeNode<int>*> n2_children = {n5, n6};
+    ms::TreeNode<int> *n2 = new ms::TreeNode<int>(2, n2_children);
+
+    ms::TreeNode<int> *n3 = new ms::TreeNode<int>(3);
+    ms::TreeNode<int> *n4 = new ms::TreeNode<int>(4);
+
+    // 创建根节点的子节点向量
+    std::vector<ms::TreeNode<int>*> root_children = {n2, n3, n4};
+    ms::TreeNode<int> *root = new ms::TreeNode<int>(1, root_children);
+
+    ms::Tree<int> tree(root);
+
+    auto print_node = [](ms::TreeNode<int> *node) { std::cout << node->val << " "; };
+
+    std::cout << "preOrder: ";
+    tree.preOrder(print_node);
+    std::cout << "\n";
+
+    std::cout << "postOrder: ";
+    tree.postOrder(print_node);
+    std::cout << "\n";
+
+    std::cout << "levelOrder: ";
+    tree.levelOrder(print_node);
+    std::cout << "\n";
+}
+
 void ms::test_bitree() {
     TestPrint(">> BiTree");
     // Construct a simple binary tree:
@@ -310,6 +355,54 @@ void ms::test_avltree() {
     std::cout << "inOrder after remove: ";
     ms::print_inorder(avl.getRoot());
     std::cout << "\n";
+}
+
+void ms::test_rbtree() {
+    TestPrint(">> RBTree");
+    ms::RBTree<int> rbt;
+
+    // 插入测试 - 使用可能导致红黑树旋转的序列
+    int arr[] = {10, 20, 30, 15, 25, 5, 35, 40, 50, 45};
+    for (int x : arr) {
+        rbt.insert(x);
+    }
+
+    std::cout << "inOrder after insert: ";
+    ms::print_inorder(rbt.getRoot(), rbt.getNil());
+    std::cout << "\n";
+
+    std::cout << "Root after insert: " << (rbt.getRoot() ? rbt.getRoot()->val : -1) << "\n";
+
+    // 最值测试
+    std::cout << "Min: " << rbt.findMin() << ", Max: " << rbt.findMax() << "\n";
+
+    // 查找测试
+    std::cout << "Search 25: " << (rbt.search(25) ? "Found" : "Not Found") << "\n";
+    std::cout << "Search 99: " << (rbt.search(99) ? "Found" : "Not Found") << "\n";
+
+    // 删除测试 - 测试不同情况的删除
+    std::cout << "Remove 5 (leaf, likely red):\n";
+    rbt.remove(5);
+    std::cout << "Search 5: " << (rbt.search(5) ? "Found" : "Not Found") << "\n";
+
+    std::cout << "Remove 20 (internal node):\n";
+    rbt.remove(20);
+    std::cout << "Search 20: " << (rbt.search(20) ? "Found" : "Not Found") << "\n";
+
+    std::cout << "Remove 30 (potentially root or near root):\n";
+    rbt.remove(30);
+    std::cout << "Search 30: " << (rbt.search(30) ? "Found" : "Not Found") << "\n";
+
+    std::cout << "inOrder after all removes: ";
+    ms::print_inorder(rbt.getRoot(), rbt.getNil());
+    std::cout << "\n";
+
+    // 再次测试最值以确保正确更新
+    try {
+        std::cout << "Min after deletes: " << rbt.findMin() << ", Max after deletes: " << rbt.findMax() << "\n";
+    } catch (const std::out_of_range &e) {
+        std::cout << "Exception: " << e.what() << "\n";
+    }
 }
 
 void ms::test_sort() {

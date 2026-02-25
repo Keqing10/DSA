@@ -24,6 +24,15 @@ template <typename Node> void print_inorder(Node *node) {
     print_inorder(node->right);
 }
 
+// 用于带哨兵节点的树（如 RBTree），以哨兵 nil 作为空节点标志
+template <typename Node> void print_inorder(Node *node, Node *nil) {
+    if (!node || node == nil)
+        return;
+    print_inorder(node->left, nil);
+    std::cout << node->val << " ";
+    print_inorder(node->right, nil);
+}
+
 class Student {
   public:
     int id; // 合法id为非负整数，-1表示未有效赋值
@@ -33,7 +42,8 @@ class Student {
     Student() : id(-1), male(false), name() {}
     Student(int _id, bool _male, std::string _name) : id(_id), male(_male), name(_name) {}
     Student(int _id, bool _male, const char *_name) : id(_id), male(_male) { name = std::string(_name); }
-    Student(Student &stu) : id(stu.id), male(stu.male), name(stu.name) {}
+    Student(const Student &stu) : id(stu.id), male(stu.male), name(stu.name) {}
+    Student(Student &&stu) : id(stu.id), male(stu.male), name(std::move(stu.name)) {}
     ~Student() {}
 
     void set(int _id, bool _male, std::string _name); // 重新设置成员变量
